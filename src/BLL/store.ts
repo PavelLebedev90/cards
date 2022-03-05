@@ -1,9 +1,11 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import {cardsReducer} from './cardsReducer';
 import thunk from 'redux-thunk';
+import {loginReducer} from './loginReducer';
 
 const rootReducer = combineReducers({
-    cards: cardsReducer
+    cards: cardsReducer,
+    login: loginReducer
 })
 
 export type RootStateType = ReturnType<typeof rootReducer>
