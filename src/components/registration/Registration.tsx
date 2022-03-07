@@ -1,45 +1,37 @@
 import React, {ChangeEvent, useState} from 'react';
 import styles from './registration.module.css';
-import {registrationApi} from "../../api/registration-api";
-import {AxiosError} from "axios";
 import {Navigate} from 'react-router-dom';
+import {useDispatch, useSelector} from "react-redux";
+import {RootStateType} from "../../BLL/store";
+import {requestForRegistrationTC, setErrorActionAC} from "../../BLL/registrationPageReducer";
 
 const Registration = () => {
+    const dispatch = useDispatch()
+    const registrationSuccess = useSelector<RootStateType, boolean>(state => state.registration.successMessage)
+    const loader = useSelector<RootStateType, boolean>(state => state.registration.loader)
+    const errorMessage = useSelector<RootStateType, string>(state => state.registration.error)
     const [emailState, setEmailState] = useState<string>('')
     const [passwordState, setPasswordState] = useState<string>('')
     const [confirmPassState, setConfirmPassState] = useState<string>('')
-    const [loader, setLoader] = useState<string>('')
-    const [errorMessage, setErrorMessage] = useState<string>('')
-    const [registrationSuccess, setRegistrationSuccess] = useState<boolean>(false)
+
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(setErrorActionAC(''))
         setEmailState(e.currentTarget.value)
     }
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(setErrorActionAC(''))
         setPasswordState(e.currentTarget.value)
     }
     const confirmPassHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        dispatch(setErrorActionAC(''))
         setConfirmPassState(e.currentTarget.value)
     }
+
     const registrationOnClick = () => {
-        setLoader('sending...')
-        if (passwordState !== confirmPassState) {
-            setErrorMessage('passwords don\'t match!')
-            setLoader('')
-        } else {
-            registrationApi.registrationUser(emailState, passwordState)
-                .then(() => {
-                    setErrorMessage('')
-                    setRegistrationSuccess(true)
-                })
-                .catch((error: AxiosError) => {
-                    setErrorMessage(error.response?.data.error)
-                })
-                .finally(() => {
-                    setLoader('')
-                })
-        }
+        dispatch(requestForRegistrationTC(emailState, passwordState, confirmPassState))
     }
+
     if (registrationSuccess) {
         return <Navigate to='/profile'/>
     }
@@ -64,7 +56,7 @@ const Registration = () => {
                        onChange={confirmPassHandler}/>
             </div>
             <div className={styles.buttonsBlock}>
-                {loader ? <div style={{color: 'green'}}>{loader}</div> :
+                {loader ? <div style={{color: 'green'}}>sending...</div> :
                     <button onClick={registrationOnClick}>Register</button>}
             </div>
             {errorMessage && <div style={{color: 'red', marginTop: '10px'}}>{errorMessage}</div>}

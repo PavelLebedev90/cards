@@ -1,3 +1,7 @@
+import {registrationApi} from "../api/registration-api";
+import {AxiosError} from "axios";
+import {Dispatch} from "redux";
+
 const initialState = {
     successMessage: false,
     loader: false,
@@ -25,6 +29,25 @@ export const setErrorActionAC = (errorText: string) => ({
 } as const)
 
 //thunks
+export const requestForRegistrationTC = (email: string, password: string, confirmPassword: string) => (dispatch: Dispatch<ActionsType>) => {
+    dispatch(setLoaderAC(true))
+    if (password !== confirmPassword) {
+        dispatch(setErrorActionAC('passwords don\'t match!'))
+        dispatch(setLoaderAC(false))
+    } else {
+        registrationApi.registrationUser(email, password)
+            .then(() => {
+                dispatch(setErrorActionAC(''))
+                dispatch(setSuccessMessageAC(true))
+            })
+            .catch((error: AxiosError) => {
+                dispatch(setErrorActionAC(error.response?.data.error))
+            })
+            .finally(() => {
+                dispatch(setLoaderAC(false))
+            })
+    }
+}
 
 //types
 type SetSuccessMessageActionType = ReturnType<typeof setSuccessMessageAC>
