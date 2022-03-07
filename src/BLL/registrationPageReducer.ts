@@ -36,12 +36,18 @@ export const requestForRegistrationTC = (email: string, password: string, confir
         dispatch(setLoaderAC(false))
     } else {
         registrationApi.registrationUser(email, password)
-            .then(() => {
-                dispatch(setErrorActionAC(''))
-                dispatch(setSuccessMessageAC(true))
+            .then((response) => {
+                if (response.data.error) {
+                    dispatch(setErrorActionAC(response.data.error))
+                    dispatch(setSuccessMessageAC(true))
+                } else {
+                    dispatch(setErrorActionAC(''))
+                    dispatch(setSuccessMessageAC(true))
+                    console.log(response.data.addedUser)
+                }
             })
             .catch((error: AxiosError) => {
-                dispatch(setErrorActionAC(error.response?.data.error))
+                dispatch(setErrorActionAC(error.response?.data.error ? error.response?.data.error : 'Some error occurred...'))
             })
             .finally(() => {
                 dispatch(setLoaderAC(false))
