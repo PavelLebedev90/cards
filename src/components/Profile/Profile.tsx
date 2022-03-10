@@ -1,8 +1,12 @@
 import React from 'react';
 import styles from './Profile.module.css'
+import {useDispatch, useSelector} from "react-redux";
+
 
 
 const Profile = () => {
+    const dispatch = useDispatch()
+
     return (
         <div className={styles.mainBlock}>
             <div className={styles.profileContainer}>
@@ -12,7 +16,7 @@ const Profile = () => {
                 </div>
                 <div className={styles.blockForm}>
                     <div className={styles.inputs}>
-                        <input className={styles.input} type="text" placeholder='Nickname' />
+                        <input className={styles.input} type="text" placeholder='Nickname' value={''}/>
                         <input className={styles.input} type="text" placeholder='Email'/>
                     </div>
                     <div className={styles.buttons}>

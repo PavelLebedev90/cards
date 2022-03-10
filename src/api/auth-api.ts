@@ -12,12 +12,12 @@ export const authAPI = {
     }
 }
 
-type ResponseType = {
+export type meResponseType = {
     addedUser: AddedUserType
     error?: string
 }
 
-type AddedUserType = {
+export type AddedUserType = {
     created: string
     email: string
     isAdmin: boolean
@@ -25,7 +25,7 @@ type AddedUserType = {
     publicCardPacksCount: number
     rememberMe: boolean
     updated: string
-    verified: boolean
+    verified?: boolean
     avatar?: string
     __v: number
     _id: string
