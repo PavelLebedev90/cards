@@ -1,0 +1,79 @@
+.mainBlock {
+    font-family: 'Poppins', sans-serif;
+}
+
+.profileContainer {
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    margin: 50px auto 0px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.personalInformation {
+    font-style: normal;
+}
+
+.blockForm {
+    width: 450px;
+    height: 250px;
+}
+
+.inputs {
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.input {
+    height: 40px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    outline: none;
+    font-size: 19px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 70px;
+}
+
+.button {
+    width: 100px;
+    height: 30px;
+    border-radius: 80px;
+    text-decoration: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+.button:hover {
+    opacity: 0.5;
+}
+
+.button:active {
+    color: black;
+    background-color: #f0f1f3;
+}
+
+.saveButton {
+    color: white;
+    background-color: darkblue;
+}
+
+.cancelButton {
+    color: white;
+    background-color: #98a7c5;
+}
+
+.inputs {
+
+}
