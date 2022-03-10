@@ -1,0 +1,61 @@
+.wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto 30px;
+    padding: 20px;
+    background-color: rgba(135, 185, 255, 0.98);
+    border-radius: 4px;
+    font-size: 20px;
+
+}
+
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.nav {
+    background-color: rgba(135, 185, 255, 0.98);
+}
+
+.nav_link {
+
+    background-color: #7051ff;
+}
+
+.nav span a {
+    margin-right: 25px;
+    color: black;
+    padding: 4px 12px;
+    border-radius: 4px;
+
+    font-size: 20px;
+    cursor: pointer;
+    user-select: none;
+    transition: 500ms;
+
+}
+
+.nav span:last-child {
+    margin-right: 0;
+}
+
+.nav span a:hover {
+
+    background-color: rgba(99, 164, 255, 0.98);
+    transition: 500ms;
+}
+
+.nav span a:active {
+    background-color: rgba(135, 185, 255, 0.98);
+    transition: 200ms;
+}
+
+.nav span a {
+    display: inline-block;
+
+}
