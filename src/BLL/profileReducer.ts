@@ -1,5 +1,5 @@
 import {Dispatch} from "redux";
-import {AddedUserType, authAPI, meResponseType} from "../api/auth-api";
+import {AddedUserType, authAPI, meResponseType} from "../api/profile-api";
 
 
 const initialState = {
