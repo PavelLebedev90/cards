@@ -8,19 +8,21 @@ import FourZeroFour from './components/404/FourZeroFour';
 import NewPassword from './components/NewPassword';
 import PasswordRecovery from './components/PasswordRecovery';
 import SuperTest from './components/SuperTest';
+import {Header} from './components/Header/Header';
 
 function App() {
     return (
         <div>
+            <Header/>
             <Routes>
-                <Route path={'login'} element={ <Login/>}/>
-                <Route path={'profile'} element={ <Profile/>}/>
-                <Route path={'registration'} element={ <Registration/>}/>
-                <Route path={'404'} element={ <FourZeroFour/>}/>
-                <Route path={'*'} element={ <Navigate to={'404'}/>}/>
-                <Route path={'newpassword'} element={ <NewPassword/>}/>
-                <Route path={'passwordrecovery'} element={ <PasswordRecovery/>}/>
-                <Route path={'supertest'} element={ <SuperTest/>}/>
+                <Route path={'login'} element={<Login/>}/>
+                <Route path={'profile'} element={<Profile/>}/>
+                <Route path={'registration'} element={<Registration/>}/>
+                <Route path={'404'} element={<FourZeroFour/>}/>
+                <Route path={'*'} element={<Navigate to={'404'}/>}/>
+                <Route path={'newpassword'} element={<NewPassword/>}/>
+                <Route path={'passwordrecovery'} element={<PasswordRecovery/>}/>
+                <Route path={'supertest'} element={<SuperTest/>}/>
             </Routes>
         </div>
     );

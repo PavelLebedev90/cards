@@ -5,7 +5,7 @@ import classesError from './FourZeroFour.module.css'
 
 const FourZeroFour = () => {
     return (
-        <div className={classesError.bg}>
+        <div>
             <div className={classesError.wrapper}>
                 <div className={classesError.content}>
                     <div className={classesError.firstSymbol}>4</div>
