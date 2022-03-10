@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Profile.module.css'
 
+
 const Profile = () => {
     return (
         <div className={styles.mainBlock}>
@@ -11,7 +12,7 @@ const Profile = () => {
                 </div>
                 <div className={styles.blockForm}>
                     <div className={styles.inputs}>
-                        <input className={styles.input} type="text" placeholder='Nickname'/>
+                        <input className={styles.input} type="text" placeholder='Nickname' />
                         <input className={styles.input} type="text" placeholder='Email'/>
                     </div>
                     <div className={styles.buttons}>
