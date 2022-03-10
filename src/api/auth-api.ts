@@ -7,8 +7,8 @@ const instance = axios.create({
 })
 
 export const authAPI = {
-    updateName(userId: string, model:UpdateUserModelType) {
-        return instance.put<UpdateUserModelType, AxiosResponse<ResponseType>>(`auth/me/${userId}`, model)
+    updateName(model:UpdateUserModelType) {
+        return instance.put<AxiosResponse<ResponseType>>(`auth/me/`, model)
     }
 }
 
@@ -26,11 +26,12 @@ type AddedUserType = {
     rememberMe: boolean
     updated: string
     verified: boolean
+    avatar?: string
     __v: number
     _id: string
 }
 
 export type UpdateUserModelType = {
     name: string
-    avatar: string
+    avatar?: string
 }
