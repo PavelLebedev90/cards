@@ -7,7 +7,7 @@ const instance = axios.create({
 })
 
 export const authAPI = {
-    updateEmail(userId: string, model:UpdateUserModelType) {
+    updateName(userId: string, model:UpdateUserModelType) {
         return instance.put<UpdateUserModelType, AxiosResponse<ResponseType>>(`auth/me/${userId}`, model)
     }
 }
@@ -30,7 +30,7 @@ type AddedUserType = {
     _id: string
 }
 
-type UpdateUserModelType = {
+export type UpdateUserModelType = {
     name: string
     avatar: string
 }
