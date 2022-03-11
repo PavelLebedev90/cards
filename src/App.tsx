@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Login from './components/Login/Login';
-import Profile from './components/Profile';
+import Profile from './components/Profile/Profile';
 import {Navigate, Route, Routes} from 'react-router-dom';
 import Registration from './components/registration/Registration';
 import FourZeroFour from './components/404/FourZeroFour';

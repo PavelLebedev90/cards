@@ -3,11 +3,13 @@ import {cardsReducer} from './cardsReducer';
 import thunk from 'redux-thunk';
 import {loginReducer} from './loginReducer';
 import {registrationPageReducer} from "./registrationPageReducer";
+import {profileReducer} from "./profileReducer";
 
 const rootReducer = combineReducers({
     cards: cardsReducer,
     login: loginReducer,
-    registration: registrationPageReducer
+    registration: registrationPageReducer,
+    profile: profileReducer,
 })
 
 export type RootStateType = ReturnType<typeof rootReducer>
