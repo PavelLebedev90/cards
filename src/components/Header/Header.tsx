@@ -8,7 +8,7 @@ export function Header() {
     return (
         <div className={stylesHeader.wrapper}>
             <nav className={stylesHeader.nav}>
-                <span><NavLink to={'/profile'}
+                <span><NavLink to={'/'}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Profile</NavLink> </span>
                 <span><NavLink to={'/login'}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Login</NavLink></span>
