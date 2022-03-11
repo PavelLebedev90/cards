@@ -16,15 +16,21 @@ const Login = () => {
     const [passwordState, setPasswordState] = useState<string>('')
     const [rememberMe, setRememberMe] = useState(false)
     const navigate = useNavigate()
-
+    const emailValidator = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setEmailState(e.currentTarget.value)
         dispatch(setError(''))
+        if(!emailValidator.test(e.currentTarget.value)){
+            dispatch(setError('Enter correct email'))
+        }
     }
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordState(e.currentTarget.value)
         dispatch(setError(''))
+        if(e.currentTarget.value.length < 5){
+            dispatch(setError('Password must be more than 5 characters '))
+        }
     }
     const rememberMeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRememberMe(e.currentTarget.checked)
