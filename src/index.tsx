@@ -9,7 +9,7 @@ import {store} from './BLL/store';
 
 ReactDOM.render(
   <React.StrictMode>
-      <BrowserRouter>
+      <BrowserRouter basename={'cards'}>
           <Provider store={store}>
               <App/>
           </Provider>
