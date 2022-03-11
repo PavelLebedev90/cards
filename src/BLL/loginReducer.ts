@@ -1,6 +1,6 @@
 import {InitialDataType, loginApi, UserDataType} from '../api/login-api';
 import {AxiosError} from 'axios';
-import {initialization} from './appReducer';
+import {Dispatch} from 'redux';
 
 
 let initialLoginState = {
@@ -54,14 +54,12 @@ export const setError = (error: string) => {
 
 // Thunk Creators
 export const loginUser = (userData: UserDataType) => (
-    // dispatch: ThunkDispatch< RootStateType, unknown, ActionLoginType>
-    dispatch:any
+    dispatch: Dispatch<ActionLoginType>
 ) => {
     dispatch(setFetching(true))
     loginApi.login(userData)
         .then((res) => {
             dispatch(setUserData(res.data))
-            dispatch(initialization())
         })
         .catch((e: AxiosError) => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
@@ -72,14 +70,12 @@ export const loginUser = (userData: UserDataType) => (
     )
 }
 export const logoutUser = () => (
-    // dispatch: ThunkDispatch< RootStateType, unknown, ActionLoginType>
-    dispatch:any
+    dispatch: Dispatch<ActionLoginType>
 ) => {
     dispatch(setFetching(true))
     loginApi.logout()
         .then(() => {
             dispatch(setUserData())
-            dispatch(initialization())
         })
         .catch((e: AxiosError) => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
@@ -91,8 +87,10 @@ export const logoutUser = () => (
 }
 
 
+
+export type SetUserDataType = ReturnType<typeof setUserData>
 type ActionLoginType =
-    ReturnType<typeof setUserData>
+    SetUserDataType
     | ReturnType<typeof setFetching>
     | ReturnType<typeof setError>
 

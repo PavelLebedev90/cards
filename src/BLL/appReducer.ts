@@ -1,6 +1,7 @@
 import {authApi} from '../api/auth-api';
 import {AxiosError} from 'axios';
-import {setUserData} from './loginReducer';
+import {setUserData, SetUserDataType} from './loginReducer';
+import {Dispatch} from 'redux';
 
 const initialState = {
     isLoggedIn: false,
@@ -48,8 +49,7 @@ export const setError = (error:null | string)=>{
 }
 
 export const initialization = ()=>(
-    // dispatch: Dispatch<ActionAppType>
-    dispatch: any
+    dispatch: Dispatch<ActionAppType>
 )=>{
     console.log('initialization')
     authApi.me()
@@ -73,3 +73,4 @@ export type ActionAppType =
     ReturnType<typeof setloggedIn>
 | ReturnType<typeof setInitialization>
 | ReturnType<typeof setError>
+| SetUserDataType

@@ -5,8 +5,9 @@ import {loginUser, setError} from '../../BLL/loginReducer';
 import Preloader from '../../features/Preloader';
 import {RootStateType} from '../../BLL/store';
 import {Navigate, NavLink} from 'react-router-dom';
-import stylesHeader from '../Header/Header.module.css';
 
+
+export const EMAIL_VALIDATOR = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
 const Login = () => {
     const dispatch = useDispatch()
@@ -16,12 +17,12 @@ const Login = () => {
     const [emailState, setEmailState] = useState<string>('')
     const [passwordState, setPasswordState] = useState<string>('')
     const [rememberMe, setRememberMe] = useState(false)
-    const emailValidator = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
+
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setEmailState(e.currentTarget.value)
         dispatch(setError(''))
-        if (!emailValidator.test(e.currentTarget.value)) {
+        if (!EMAIL_VALIDATOR.test(e.currentTarget.value)) {
             dispatch(setError('Enter correct email'))
         }
     }
@@ -79,8 +80,7 @@ const Login = () => {
 
             <div className={stylesLogin.registration}>
                 <span>or </span>
-                <span><NavLink to={'/registration'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Registration</NavLink></span>
+                <span><NavLink to={'/registration'}>Registration</NavLink></span>
             </div>
 
         </div>
