@@ -9,7 +9,7 @@ import {store} from './BLL/store';
 
 ReactDOM.render(
   <React.StrictMode>
-      <HashRouter basename={'cards'}>
+      <HashRouter>
           <Provider store={store}>
               <App/>
           </Provider>
