@@ -22,6 +22,7 @@ h1 {
     font-style: normal;
 
 }
+
 h3 {
     margin-top: 32px;
     margin-bottom: 0;
@@ -30,6 +31,7 @@ h3 {
     font-size: 22px;
     line-height: 33px;
 }
+
 .inputsBlock {
     display: flex;
     flex-direction: column;
@@ -37,15 +39,34 @@ h3 {
     margin: 39px 0 0 0;
 
 }
+
 .inputsBlock input {
     margin-bottom: 24px;
 }
+
 .buttonsBlock {
     margin: 60px 0 0 0;
 }
-.error{
+
+.error {
     font-size: 15px;
     font-weight: bolder;
-    color: rgba(255,93,64,0.98);
+    color: rgba(255, 93, 64, 0.98);
     margin: 5px;
+}
+
+.registration {
+    margin-top: 50px;
+    position: relative;
+}
+
+.registration:before {
+    content: '';
+    position: absolute;
+    width: 250%;
+    top: -40%;
+    left: 50%;
+    background-color: black;
+    transform: translateX(-50%);
+    height: 2px;
 }

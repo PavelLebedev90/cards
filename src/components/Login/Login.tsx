@@ -4,31 +4,31 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loginUser, setError} from '../../BLL/loginReducer';
 import Preloader from '../../features/Preloader';
 import {RootStateType} from '../../BLL/store';
-import {useNavigate} from 'react-router-dom';
+import {Navigate, NavLink} from 'react-router-dom';
+import stylesHeader from '../Header/Header.module.css';
 
 
 const Login = () => {
     const dispatch = useDispatch()
     const isFetching = useSelector<RootStateType, boolean>(state => state.login.isFetching)
     const error = useSelector<RootStateType, string>(state => state.login.error)
-    const userId = useSelector<RootStateType, string>(state => state.login._id)
+    const userId = useSelector<RootStateType, string>(state => state.login.user._id)
     const [emailState, setEmailState] = useState<string>('')
     const [passwordState, setPasswordState] = useState<string>('')
     const [rememberMe, setRememberMe] = useState(false)
-    const navigate = useNavigate()
     const emailValidator = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setEmailState(e.currentTarget.value)
         dispatch(setError(''))
-        if(!emailValidator.test(e.currentTarget.value)){
+        if (!emailValidator.test(e.currentTarget.value)) {
             dispatch(setError('Enter correct email'))
         }
     }
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordState(e.currentTarget.value)
         dispatch(setError(''))
-        if(e.currentTarget.value.length < 5){
+        if (e.currentTarget.value.length < 5) {
             dispatch(setError('Password must be more than 5 characters '))
         }
     }
@@ -44,12 +44,15 @@ const Login = () => {
     }
 
     if (userId) {
-        navigate('/profile')
+        return <Navigate to={'/'}/>
     }
+
     return (
         <div className={stylesLogin.mainBlock}>
             <h1>It-incubator</h1>
-            <h3>Sign in</h3>
+            <h3>
+                Sign in
+            </h3>
             <div className={stylesLogin.inputsBlock}>
                 <input type="text"
                        placeholder="Email"
@@ -70,8 +73,14 @@ const Login = () => {
                 <div className={stylesLogin.error}>{error}</div>
                 {isFetching
                     ? <Preloader/>
-                    : <button onClick={onClickHandler} disabled={!!error}>Register</button>
+                    : <button onClick={onClickHandler} disabled={!!error}>Login</button>
                 }
+            </div>
+
+            <div className={stylesLogin.registration}>
+                <span>or </span>
+                <span><NavLink to={'/registration'}
+                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Registration</NavLink></span>
             </div>
 
         </div>

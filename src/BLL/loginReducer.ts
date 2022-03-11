@@ -1,29 +1,33 @@
 import {InitialDataType, loginApi, UserDataType} from '../api/login-api';
-import {Dispatch} from 'redux';
 import {AxiosError} from 'axios';
+import {initialization} from './appReducer';
 
 
 let initialLoginState = {
+    user: {},
     isFetching: false,
     error: ''
 } as InitialStatetype
 
 export const loginReducer = (state = initialLoginState, action: ActionLoginType): InitialStatetype => {
     switch (action.type) {
-        case 'LOGIN/SET-USER-DATA':
         case 'LOGIN/SET-FETCHING':
         case 'LOGIN/SET-ERROR':
-            console.log(action.payload)
             return {
                 ...state,
                 ...action.payload
+            }
+        case 'LOGIN/SET-USER-DATA':
+            return {
+                ...state,
+                user: {...action.payload}
             }
         default:
             return state
     }
 }
 // Action Creators
-export const setUserData = (Data: InitialDataType) => {
+export const setUserData = (Data = {} as InitialDataType) => {
     return {
         type: 'LOGIN/SET-USER-DATA',
         payload: {
@@ -49,12 +53,33 @@ export const setError = (error: string) => {
 }
 
 // Thunk Creators
-export const loginUser = (userData: UserDataType) => (dispatch: Dispatch<ActionLoginType>) => {
+export const loginUser = (userData: UserDataType) => (
+    // dispatch: ThunkDispatch< RootStateType, unknown, ActionLoginType>
+    dispatch:any
+) => {
     dispatch(setFetching(true))
     loginApi.login(userData)
         .then((res) => {
-            console.log(res.data)
             dispatch(setUserData(res.data))
+            dispatch(initialization())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        }).finally(() => {
+            dispatch(setFetching(false))
+        }
+    )
+}
+export const logoutUser = () => (
+    // dispatch: ThunkDispatch< RootStateType, unknown, ActionLoginType>
+    dispatch:any
+) => {
+    dispatch(setFetching(true))
+    loginApi.logout()
+        .then(() => {
+            dispatch(setUserData())
+            dispatch(initialization())
         })
         .catch((e: AxiosError) => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
@@ -65,12 +90,15 @@ export const loginUser = (userData: UserDataType) => (dispatch: Dispatch<ActionL
     )
 }
 
+
 type ActionLoginType =
     ReturnType<typeof setUserData>
     | ReturnType<typeof setFetching>
     | ReturnType<typeof setError>
 
-type InitialStatetype = InitialDataType & {
+
+type InitialStatetype = {
+    user: InitialDataType
     isFetching: boolean
     error: string
 }

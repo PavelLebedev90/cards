@@ -1,12 +1,18 @@
 import React from 'react';
 import styles from './Profile.module.css'
-import {useDispatch, useSelector} from "react-redux";
-
+import {useSelector} from 'react-redux';
+import {RootStateType} from '../../BLL/store';
+import {Navigate} from 'react-router-dom';
 
 
 const Profile = () => {
-    const dispatch = useDispatch()
 
+    const userId = useSelector<RootStateType, string>(state => state.login.user._id)
+    if(!userId){
+        return (
+            <Navigate to={'/login'}/>
+        )
+    }
     return (
         <div className={styles.mainBlock}>
             <div className={styles.profileContainer}>
@@ -16,8 +22,8 @@ const Profile = () => {
                 </div>
                 <div className={styles.blockForm}>
                     <div className={styles.inputs}>
-                        <input className={styles.input} type="text" placeholder='Nickname' value={''}/>
-                        <input className={styles.input} type="text" placeholder='Email'/>
+                        <input className={styles.input} type="text" placeholder="Nickname" />
+                        <input className={styles.input} type="text" placeholder="Email"/>
                     </div>
                     <div className={styles.buttons}>
                         <button className={`${styles.button} ${styles.cancelButton}`}>Cancel</button>

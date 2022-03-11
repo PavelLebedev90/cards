@@ -10,6 +10,9 @@ export const instanceLogin = axios.create({
 export const loginApi = {
     login(userData: UserDataType){
         return instanceLogin.post<InitialDataType>('/auth/login', userData)
+    },
+    logout(){
+        return instanceLogin.delete('/auth/me')
     }
 }
 
