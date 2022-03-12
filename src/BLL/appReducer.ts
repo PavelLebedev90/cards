@@ -51,7 +51,6 @@ export const setError = (error:null | string)=>{
 export const initialization = ()=>(
     dispatch: Dispatch<ActionAppType>
 )=>{
-    console.log('initialization')
     authApi.me()
         .then((res)=>{
             if(res.data._id){

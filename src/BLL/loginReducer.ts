@@ -1,13 +1,13 @@
-import {InitialDataType, loginApi, UserDataType} from '../api/login-api';
+import {ForgotDataType, InitialDataType, loginApi, UserDataType} from '../api/login-api';
 import {AxiosError} from 'axios';
 import {Dispatch} from 'redux';
 
 
-let initialLoginState = {
-    user: {},
+let initialLoginState:InitialStatetype = {
+    user: {} as InitialDataType,
     isFetching: false,
     error: ''
-} as InitialStatetype
+}
 
 export const loginReducer = (state = initialLoginState, action: ActionLoginType): InitialStatetype => {
     switch (action.type) {
@@ -76,6 +76,23 @@ export const logoutUser = () => (
     loginApi.logout()
         .then(() => {
             dispatch(setUserData())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        }).finally(() => {
+            dispatch(setFetching(false))
+        }
+    )
+}
+export const forgotUserPassword = (data: ForgotDataType) => (
+    dispatch: Dispatch<ActionLoginType>
+) => {
+    dispatch(setFetching(true))
+    loginApi.forgotPassword(data)
+        .then((res) => {
+            // dispatch(setUserData())
+            console.log(res)
         })
         .catch((e: AxiosError) => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');

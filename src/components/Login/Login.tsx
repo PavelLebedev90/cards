@@ -4,8 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loginUser, setError} from '../../BLL/loginReducer';
 import Preloader from '../../features/Preloader';
 import {RootStateType} from '../../BLL/store';
-import {Navigate, NavLink} from 'react-router-dom';
-
+import {Navigate, Link} from 'react-router-dom';
+import eye from './../../logo/eye/eye.svg'
+import eyeOff from './../../logo/eye/eyeOff.svg'
 
 export const EMAIL_VALIDATOR = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
@@ -17,6 +18,7 @@ const Login = () => {
     const [emailState, setEmailState] = useState<string>('')
     const [passwordState, setPasswordState] = useState<string>('')
     const [rememberMe, setRememberMe] = useState(false)
+    const [visible, setVisible] = useState(false)
 
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -43,46 +45,65 @@ const Login = () => {
             rememberMe: rememberMe
         }))
     }
-
     if (userId) {
         return <Navigate to={'/'}/>
     }
+    const inputType = visible ? 'text' : 'password';
+    const logoSrc = visible ? eyeOff : eye;
 
     return (
         <div className={stylesLogin.mainBlock}>
-            <h1>It-incubator</h1>
-            <h3>
+            <h1 className={stylesLogin.header}>
                 Sign in
-            </h3>
+            </h1>
             <div className={stylesLogin.inputsBlock}>
                 <input type="text"
                        placeholder="Email"
                        value={emailState}
                        onChange={emailHandler}/>
 
-                <input type="password"
-                       placeholder="Password"
-                       value={passwordState}
-                       onChange={passwordHandler}/>
+                <span className={stylesLogin.inputPassword}>
+                    <input type={inputType}
+                           placeholder="Password"
+                           value={passwordState}
+                           onChange={passwordHandler}/>
 
-                <input type="checkbox" checked={rememberMe}
+                         <img src={logoSrc} alt="logo"
+                             className={stylesLogin.eye}
+                             onClick={() => setVisible(!visible)}
+                     />
+
+                </span>
+                <input type="checkbox" className={stylesLogin.checkbox} id={stylesLogin.checkbox}
+                       checked={rememberMe}
                        onChange={rememberMeHandler}
-                /> Remember me
+                />
+                <label htmlFor={stylesLogin.checkbox}>Remember me</label>
 
             </div>
             <div className={stylesLogin.buttonsBlock}>
                 <div className={stylesLogin.error}>{error}</div>
                 {isFetching
                     ? <Preloader/>
-                    : <button onClick={onClickHandler} disabled={!!error}>Login</button>
+                    : <button onClick={onClickHandler}
+                              disabled={!!error}
+                              className={stylesLogin.button}
+                    >Login</button>
                 }
             </div>
-
             <div className={stylesLogin.registration}>
-                <span>or </span>
-                <span><NavLink to={'/registration'}>Registration</NavLink></span>
+                <div className={stylesLogin.forgot}>
+                    <Link to={'/forgot'}>
+                        Forgot Password
+                    </Link>
+                </div>
+                <div>
+                    <span className={stylesLogin.description}>Don’t have an account? </span>
+                </div>
+                <div className={stylesLogin.toReg}>
+                    <Link to={'/registration'}> Registration</Link>
+                </div>
             </div>
-
         </div>
     );
 };
