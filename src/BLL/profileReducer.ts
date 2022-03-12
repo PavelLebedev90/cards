@@ -1,5 +1,5 @@
-import {Dispatch} from 'redux';
-import {profileAPI, UpdateUserModelType} from '../api/profile-api';
+import {Dispatch} from "redux";
+import {profileAPI, meResponseType, UpdateUserModelType} from "../api/profile-api";
 
 
 const initialState = {
