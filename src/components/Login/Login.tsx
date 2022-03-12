@@ -19,14 +19,25 @@ const Login = () => {
     const [passwordState, setPasswordState] = useState<string>('')
     const [rememberMe, setRememberMe] = useState(false)
     const [visible, setVisible] = useState(false)
-
+    const [id, setId] = useState(0)
+    const [valid, setValid] = useState(false)
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmailState(e.currentTarget.value)
-        dispatch(setError(''))
-        if (!EMAIL_VALIDATOR.test(e.currentTarget.value)) {
-            dispatch(setError('Enter correct email'))
-        }
+            const value = e.currentTarget.value
+            setEmailState(value)
+            setValid(false)
+            clearTimeout(id)
+            setId(0)
+            dispatch(setError(''))
+            let ident = setTimeout(() => {
+                if (!EMAIL_VALIDATOR.test(value)) {
+                    dispatch(setError('Enter correct email'))
+                }else{
+                    setValid(true)
+                    dispatch(setError(''))
+                }
+            }, 3000)
+            setId(+ident)
     }
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordState(e.currentTarget.value)
@@ -86,7 +97,7 @@ const Login = () => {
                 {isFetching
                     ? <Preloader/>
                     : <button onClick={onClickHandler}
-                              disabled={!!error}
+                              disabled={!!error || !valid}
                               className={stylesLogin.button}
                     >Login</button>
                 }
@@ -101,7 +112,7 @@ const Login = () => {
                     <span className={stylesLogin.description}>Don’t have an account? </span>
                 </div>
                 <div className={stylesLogin.toReg}>
-                    <Link to={'/registration'}> Registration</Link>
+                    <Link to={'/registration'}>Sign up</Link>
                 </div>
             </div>
         </div>

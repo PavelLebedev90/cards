@@ -16,10 +16,6 @@ export function Header({login}:HeaderType) {
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Profile</NavLink> </span>
                 <span><NavLink to={`/${login.toLowerCase()}`}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>{login}</NavLink></span>
-                <span><NavLink to={'/newpassword'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>New password</NavLink></span>
-                <span><NavLink to={'/passwordrecovery'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Password recovery</NavLink></span>
                 <span><NavLink to={'/supertest'}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Super test</NavLink></span>
             </nav>
