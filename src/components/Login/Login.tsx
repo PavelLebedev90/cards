@@ -20,7 +20,7 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState(false)
     const [visible, setVisible] = useState(false)
     const [id, setId] = useState(0)
-    const [valid, setValid] = useState(false)
+    const [valid, setValid] = useState(true)
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
             const value = e.currentTarget.value
