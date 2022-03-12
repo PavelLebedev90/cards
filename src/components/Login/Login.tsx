@@ -36,7 +36,7 @@ const Login = () => {
                     setValid(true)
                     dispatch(setError(''))
                 }
-            }, 3000)
+            }, 2000)
             setId(+ident)
     }
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
