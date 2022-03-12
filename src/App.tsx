@@ -15,6 +15,7 @@ import {RootStateType} from './BLL/store';
 import Preloader from './features/Preloader';
 import Logout from './components/Login/Logout/Logout';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import SetNewPassword from './SetNewPassword/SetNewPassword';
 
 function App() {
     const dispatch = useDispatch()
@@ -46,6 +47,7 @@ function App() {
                 <Route path={'/passwordrecovery'} element={<PasswordRecovery/>}/>
                 <Route path={'/supertest'} element={<SuperTest/>}/>
                 <Route path={'/forgot'} element={<ForgotPassword/>}/>
+                <Route path={'/set-new-password/:token'} element={<SetNewPassword/>}/>
             </Routes>
         </div>
     );

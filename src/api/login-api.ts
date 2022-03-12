@@ -18,7 +18,15 @@ export const loginApi = {
     },
     forgotPassword(forgotData:ForgotDataType){
         return instanceLogin.post('/auth/forgot',forgotData)
+    },
+    setNewPassword(newPasswordData:NewPasswordDataType){
+        return instanceLogin.post('/auth/set-new-password',newPasswordData)
     }
+}
+
+export type NewPasswordDataType = {
+    password: string
+    resetPasswordToken: string
 }
 
 export type ForgotDataType = {

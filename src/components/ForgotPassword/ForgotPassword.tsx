@@ -7,6 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import Preloader from '../../features/Preloader';
 import {RootStateType} from '../../BLL/store';
 import {Link} from 'react-router-dom';
+import emailLogo from './../../logo/email.png'
 
 const ForgotPassword = () => {
     const [emailState, setEmailState] = useState<string>('')
@@ -14,6 +15,7 @@ const ForgotPassword = () => {
     const [valid, setValid] = useState(false)
     const isFetching = useSelector<RootStateType, boolean>(state => state.login.isFetching)
     const error = useSelector<RootStateType, string>(state => state.login.error)
+    const sendMessage = useSelector<RootStateType, boolean>(state => state.login.sendMessage)
     const dispatch = useDispatch()
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,6 +48,23 @@ const forgotData = {
 const onClickHandler = () => {
     dispatch(forgotUserPassword(forgotData))
 }
+
+if(sendMessage){
+    return (
+        <div className={stylesLogin.mainBlock}>
+            <h1 className={stylesLogin.header}>
+                Check Email
+            </h1>
+            <div className={stylesForgot.emailLogo}>
+                <img src={emailLogo} alt="email-logo"/>
+            </div>
+            <div className={stylesForgot.description}>
+                We’ve sent an Email with instructions to example@mail.com
+            </div>
+        </div>
+    )
+}
+
 return (
     <div className={stylesLogin.mainBlock}>
         <h1 className={stylesLogin.header}>
