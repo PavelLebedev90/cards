@@ -10,63 +10,78 @@ import {Link} from 'react-router-dom';
 
 const ForgotPassword = () => {
     const [emailState, setEmailState] = useState<string>('')
+    const [id, setId] = useState(0)
+    const [valid, setValid] = useState(false)
     const isFetching = useSelector<RootStateType, boolean>(state => state.login.isFetching)
     const error = useSelector<RootStateType, string>(state => state.login.error)
     const dispatch = useDispatch()
+
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmailState(e.currentTarget.value)
+        const value = e.currentTarget.value
+        setEmailState(value)
+        setValid(false)
+        clearTimeout(id)
+        setId(0)
         dispatch(setError(''))
-        if (!EMAIL_VALIDATOR.test(e.currentTarget.value)) {
-            dispatch(setError('Enter correct email'))
-        }
+            let ident = setTimeout(() => {
+                if (!EMAIL_VALIDATOR.test(value)) {
+                    dispatch(setError('Enter correct email'))
+                }else{
+                    setValid(true)
+                    dispatch(setError(''))
+                }
+            }, 3000)
+            setId(+ident)
     }
-    const forgotData = {
-        email: emailState,
-        from: 'pashoktver90@gmail.com',
-        message: `<div style="background-color: lime; padding: 15px">
+
+const forgotData = {
+    email: emailState,
+    from: 'pashoktver90@gmail.com',
+    message: `<div style="background-color: lime; padding: 15px">
                   password recovery link: 
-                  <a href='http://localhost:3000/#/set-new-password/$token$'>
+                  <a href='http://localhost:3000/cards/#/set-new-password/$token$'>
                   link</a>
                   </div>`
-    }
-    const onClickHandler = () => {
-        dispatch(forgotUserPassword(forgotData))
-    }
-    return (
-        <div className={stylesLogin.mainBlock}>
-            <h1 className={stylesLogin.header}>
-                Forgot your password?
-            </h1>
-            <div className={stylesLogin.inputsBlock}>
-                <input type="text"
-                       placeholder="Email"
-                       value={emailState}
-                       onChange={emailHandler}/>
+}
+const onClickHandler = () => {
+    dispatch(forgotUserPassword(forgotData))
+}
+return (
+    <div className={stylesLogin.mainBlock}>
+        <h1 className={stylesLogin.header}>
+            Forgot your password?
+        </h1>
+        <div className={stylesLogin.inputsBlock}>
+            <input type="text"
+                   placeholder="Email"
+                   value={emailState}
+                   onChange={emailHandler}/>
+        </div>
+        <div className={stylesForgot.description}>
+            Enter your email address and we will send you further instructions
+        </div>
+        <div className={stylesLogin.buttonsBlock}>
+            <div className={stylesLogin.error}>{error}</div>
+            {isFetching
+                ? <Preloader/>
+                : <button
+                    onClick={onClickHandler}
+                    disabled={!!error || !valid}
+                    className={stylesLogin.button}
+                >Send Instructions</button>
+            }
+        </div>
+        <div className={stylesLogin.registration}>
+            <div>
+                <span className={stylesLogin.description}>Did you remember your password?</span>
             </div>
-            <div className={stylesForgot.description}>
-                Enter your email address and we will send you further instructions
-            </div>
-            <div className={stylesLogin.buttonsBlock}>
-                <div className={stylesLogin.error}>{error}</div>
-                {isFetching
-                    ? <Preloader/>
-                    : <button
-                        onClick={onClickHandler}
-                        disabled={!!error}
-                        className={stylesLogin.button}
-                    >Send Instructions</button>
-                }
-            </div>
-            <div className={stylesLogin.registration}>
-                <div>
-                    <span className={stylesLogin.description}>Did you remember your password?</span>
-                </div>
-                <div className={stylesLogin.toReg}>
-                    <Link to={'/login'}>Try logging in</Link>
-                </div>
+            <div className={stylesLogin.toReg}>
+                <Link to={'/login'}>Try logging in</Link>
             </div>
         </div>
-    );
-};
+    </div>
+);
+}
+;
 
 export default ForgotPassword;
