@@ -4,9 +4,10 @@ import {useDispatch, useSelector} from 'react-redux';
 import {loginUser, setError} from '../../BLL/loginReducer';
 import Preloader from '../../features/Preloader';
 import {RootStateType} from '../../BLL/store';
-import {Navigate, Link} from 'react-router-dom';
+import {Link, Navigate} from 'react-router-dom';
 import eye from './../../logo/eye/eye.svg'
 import eyeOff from './../../logo/eye/eyeOff.svg'
+
 
 export const EMAIL_VALIDATOR = /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/iu;
 
@@ -23,22 +24,25 @@ const Login = () => {
     const [valid, setValid] = useState(true)
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-            const value = e.currentTarget.value
-            setEmailState(value)
-            setValid(false)
-            clearTimeout(id)
-            setId(0)
-            dispatch(setError(''))
-            let ident = setTimeout(() => {
-                if (!EMAIL_VALIDATOR.test(value)) {
-                    dispatch(setError('Enter correct email'))
-                }else{
-                    setValid(true)
-                    dispatch(setError(''))
-                }
-            }, 2000)
-            setId(+ident)
+        const value = e.currentTarget.value
+        setEmailState(value)
+        setValid(false)
+        clearTimeout(id)
+        setId(0)
+        dispatch(setError(''))
+        let ident = setTimeout(() => {
+            if (!EMAIL_VALIDATOR.test(value)) {
+                dispatch(setError('Enter correct email'))
+            } else {
+                setValid(true)
+                dispatch(setError(''))
+            }
+        }, 1000)
+        setId(+ident)
     }
+    console.log(emailState)
+    console.log(passwordState)
+    console.log(rememberMe)
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordState(e.currentTarget.value)
         dispatch(setError(''))
@@ -62,6 +66,7 @@ const Login = () => {
     const inputType = visible ? 'text' : 'password';
     const logoSrc = visible ? eyeOff : eye;
 
+
     return (
         <div className={stylesLogin.mainBlock}>
             <h1 className={stylesLogin.header}>
@@ -71,19 +76,18 @@ const Login = () => {
                 <input type="text"
                        placeholder="Email"
                        value={emailState}
-                       onChange={emailHandler}/>
+                       onChange={emailHandler}
+                />
 
                 <span className={stylesLogin.inputPassword}>
                     <input type={inputType}
                            placeholder="Password"
                            value={passwordState}
                            onChange={passwordHandler}/>
-
                          <img src={logoSrc} alt="logo"
-                             className={stylesLogin.eye}
-                             onClick={() => setVisible(!visible)}
-                     />
-
+                              className={stylesLogin.eye}
+                              onClick={() => setVisible(!visible)}
+                         />
                 </span>
                 <input type="checkbox" className={stylesLogin.checkbox} id={stylesLogin.checkbox}
                        checked={rememberMe}
