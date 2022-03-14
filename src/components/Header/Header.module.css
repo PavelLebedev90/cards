@@ -2,13 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
     padding: 20px;
     background-color: rgba(135, 185, 255, 0.98);
     border-radius: 4px;
     font-size: 20px;
-
 }
 
 
@@ -28,7 +25,7 @@ a {
 }
 
 .nav span a {
-    margin-right: 25px;
+    margin: 0 15px;
     color: black;
     padding: 4px 12px;
     border-radius: 4px;
@@ -40,9 +37,7 @@ a {
 
 }
 
-.nav span:last-child {
-    margin-right: 0;
-}
+
 
 .nav span a:hover {
 

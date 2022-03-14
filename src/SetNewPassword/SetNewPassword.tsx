@@ -6,7 +6,7 @@ import {Navigate} from 'react-router-dom';
 import eyeOff from '../logo/eye/eyeOff.svg';
 import eye from '../logo/eye/eye.svg';
 import stylesForgot from '../components/ForgotPassword/ForgotPassword.module.css';
-import Preloader from '../features/Preloader';
+import Preloader from '../features/Preloader/Preloader';
 import {RootStateType} from '../BLL/store';
 import {useParams} from 'react-router-dom';
 

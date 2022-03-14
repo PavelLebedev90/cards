@@ -4,7 +4,7 @@ import stylesLogin from '../Login/Login.module.css';
 import {forgotUserPassword, setError} from '../../BLL/loginReducer';
 import {EMAIL_VALIDATOR} from '../Login/Login';
 import {useDispatch, useSelector} from 'react-redux';
-import Preloader from '../../features/Preloader';
+import Preloader from '../../features/Preloader/Preloader';
 import {RootStateType} from '../../BLL/store';
 import {Link} from 'react-router-dom';
 import emailLogo from './../../logo/email.png'
@@ -32,7 +32,7 @@ const ForgotPassword = () => {
                     setValid(true)
                     dispatch(setError(''))
                 }
-            }, 2000)
+            }, 1500)
             setId(+ident)
     }
 

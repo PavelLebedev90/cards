@@ -15,8 +15,8 @@ export function Header({login}:HeaderType) {
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Profile</NavLink> </span>
                 <span><NavLink to={`/${login.toLowerCase()}`}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>{login}</NavLink></span>
-                <span><NavLink to={'/supertest'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Super test</NavLink></span>
+                <span><NavLink to={'/packs-list'}
+                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Packs list</NavLink></span>
             </nav>
         </div>
     )

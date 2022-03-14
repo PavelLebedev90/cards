@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from 'react';
 import stylesLogin from './Login.module.css'
 import {useDispatch, useSelector} from 'react-redux';
 import {loginUser, setError} from '../../BLL/loginReducer';
-import Preloader from '../../features/Preloader';
+import Preloader from '../../features/Preloader/Preloader';
 import {RootStateType} from '../../BLL/store';
 import {Link, Navigate} from 'react-router-dom';
 import eye from './../../logo/eye/eye.svg'
@@ -37,18 +37,26 @@ const Login = () => {
                 setValid(true)
                 dispatch(setError(''))
             }
-        }, 1000)
+        }, 1500)
         setId(+ident)
     }
-    console.log(emailState)
-    console.log(passwordState)
-    console.log(rememberMe)
+
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setPasswordState(e.currentTarget.value)
+        const value = e.currentTarget.value
+        setPasswordState(value)
+        setValid(false)
+        clearTimeout(id)
+        setId(0)
         dispatch(setError(''))
-        if (e.currentTarget.value.length < 5) {
-            dispatch(setError('Password must be more than 5 characters '))
-        }
+        let ident1 = setTimeout(()=>{
+            if (value.length < 5) {
+                dispatch(setError('Password must be more than 5 characters '))
+            }else {
+                setValid(true)
+                dispatch(setError(''))
+            }
+        },1500)
+        setId(+ident1)
     }
     const rememberMeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRememberMe(e.currentTarget.checked)
@@ -96,7 +104,7 @@ const Login = () => {
                 <label htmlFor={stylesLogin.checkbox}>Remember me</label>
 
             </div>
-            <div className={stylesLogin.buttonsBlock}>
+            <div className={`${stylesLogin.buttonsBlock} ${stylesLogin.buttonsBlockPosition}`}>
                 <div className={stylesLogin.error}>{error}</div>
                 {isFetching
                     ? <Preloader/>

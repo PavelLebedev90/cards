@@ -76,12 +76,22 @@ h3 {
 .buttonsBlock {
     margin: 30px 0 0 0;
 }
-
+.buttonsBlockPosition{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 .error {
+    box-sizing: content-box;
+    position: absolute;
+    top: 58%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translateX(-50%);
     font-size: 15px;
     font-weight: bolder;
     color: rgba(255, 93, 64, 0.98);
-    margin: 5px;
 }
 
 .registration{
@@ -159,12 +169,16 @@ h3 {
 }
 
 .button {
+    /*position: absolute;*/
+    /*bottom: 23%;*/
+    /*left: 50%;*/
+    /*transform: translate(-50%, -50%);*/
     width: 200px;
     height: 30px;
     border-radius: 80px;
     text-decoration: none;
     border: none;
-    margin: 5px;
+    margin: 15px 5px 0;
     transition: 0.3s;
     font-size: 20px;
     color: white;

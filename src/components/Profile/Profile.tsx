@@ -4,7 +4,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
 import {fetchUserTC, updateUserNameTC} from "../../BLL/profileReducer";
 import { Navigate} from 'react-router-dom';
-import Preloader from "../../features/Preloader";
+import Preloader from "../../features/Preloader/Preloader";
 
 
 const Profile = () => {

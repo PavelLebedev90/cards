@@ -1,7 +1,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../../BLL/store';
-import Preloader from '../../../features/Preloader';
+import Preloader from '../../../features/Preloader/Preloader';
 import {logoutUser} from '../../../BLL/loginReducer';
 import {Navigate} from 'react-router-dom';
 import stylesLogin from '../Login.module.css';
