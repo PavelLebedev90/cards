@@ -11,8 +11,9 @@ export const instancePack = axios.create({
 })
 
 export const packApi = {
-    getPacks(){
-        return instanceLogin.get<PacksDataType>(`/cards/pack?pageCount=${50}`)
+    getPacks(packsFetchData: PacksFetchDataType = {} as PacksFetchDataType){
+        // return instanceLogin.get<PacksDataType>(`/cards/pack?pageCount=${50}`)
+        return instanceLogin.get<PacksDataType>(`/cards/pack`,{params: packsFetchData})
     }
 }
 
@@ -21,8 +22,8 @@ export type PackType = {
     user_id: string
     name: string
     cardsCount: number
-    created: string
-    updated: string
+    created: Date
+    updated: Date
     user_name:string
 }
 export type PacksDataType = {
@@ -33,7 +34,15 @@ export type PacksDataType = {
     page: number
     pageCount: number
 }
-
+export type PacksFetchDataType = {
+    packName: string
+    min: number
+    max: number
+    sortPacks: string
+    page: number
+    pageCount: number
+    user_id: string
+}
 
 
 

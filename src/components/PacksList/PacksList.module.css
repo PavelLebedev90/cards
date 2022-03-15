@@ -10,7 +10,27 @@
     padding: 5px 10px;
 }
 
-.formPacks{
+.preloader {
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.preloaderControl {
+    font-size: 30px;
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.formPacks {
     display: flex;
     width: 100%;
     align-items: baseline;
@@ -18,15 +38,18 @@
     margin: 10px 0;
     flex-wrap: wrap;
 }
-.BGFormPacks{
+
+.BGFormPacks {
     background: #F8F7FD;
     border-radius: 4px;
     padding: 5px;
 }
-.filterPacks{
+
+.filterPacks {
     text-align: center;
 }
-.filteredPacks{
+
+.filteredPacks {
     display: inline-block;
     width: 40px;
     height: 30px;
@@ -37,7 +60,8 @@
     cursor: pointer;
     transition: 0.3s;
 }
-.activeFilteredPacks{
+
+.activeFilteredPacks {
     background-color: darkblue;
     color: white;
     padding: 10px;
@@ -48,16 +72,19 @@
     cursor: pointer;
     transition: 0.3s;
 }
-.rangeInputWrapper{
+
+.rangeInputWrapper {
     margin: 30px 0 0 0;
     text-align: center;
 }
-.rangeInput{
+
+.rangeInput {
     padding: 10px;
     margin-top: 10px;
     height: 30px;
 }
-.tableButton{
+
+.tableButton {
     width: 50px;
     height: 25px;
     border-radius: 10px;
@@ -68,44 +95,54 @@
     font-size: 10px;
     color: darkblue;
     font-weight: bolder;
-    background-color:#D7D8EF;
+    background-color: #D7D8EF;
 }
+
 .tableButton:hover {
     background-color: darkblue;
     color: white;
 }
-.tableButton:disabled{
+
+.tableButton:disabled {
     opacity: 0.2;
 }
+
 .tableButton:active {
     color: black;
     background-color: #f0f1f3;
 }
-.deleteTableButton{
+
+.deleteTableButton {
     color: white;
     background-color: #F1453D;
 }
-.deleteTableButton:hover{
+
+.deleteTableButton:hover {
     background-color: #f80a00;
 }
-.deleteTableButton:active{
+
+.deleteTableButton:active {
     color: black;
     background-color: #ff9a94;
 }
 
 .table {
-    /*table-layout:fixed;*/
+    table-layout: fixed;
     word-break: break-word;
     width: 100%;
     border: none;
     margin-bottom: 20px;
     border-collapse: separate;
 }
-.colName{
-    width: 40%;
+
+/*.colName{*/
+/*    width: 40%;*/
+/*}*/
+.tableFetching {
+    opacity: 0.35;
 }
 
-.table thead{
+.table thead {
     text-align: center;
     font-weight: bold;
     border: none;
@@ -113,12 +150,28 @@
     background: #ECECF9;
     font-size: 14px;
 }
+
+.logoWrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 50px;
+}
+
+.sortLogo {
+    width: 25px;
+    cursor: pointer;
+}
+
 .table thead tr th:first-child {
     border-radius: 20px 0 0 0;
 }
+
 .table thead tr th:last-child {
     border-radius: 0 20px 0 0;
 }
+
 .table tbody td {
     text-align: center;
     border: none;
@@ -126,12 +179,15 @@
     font-size: 14px;
     vertical-align: top;
 }
+
 .table tbody tr:nth-child(odd) {
     background: #F8F7FD;
 }
+
 .table tbody tr:last-child td:first-child {
     border-radius: 0 0 0 20px;
 }
+
 .table tbody tr:last-child td:last-child {
     border-radius: 0 0 20px 0;
 }

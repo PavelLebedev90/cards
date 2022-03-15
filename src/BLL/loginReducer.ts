@@ -140,11 +140,11 @@ export const setUserPassword = (data: NewPasswordDataType) => (
     )
 }
 
-
+export type SetFetchingType = ReturnType<typeof setFetching>
 export type SetUserDataType = ReturnType<typeof setUserData>
 type ActionLoginType =
     SetUserDataType
-    | ReturnType<typeof setFetching>
+    | SetFetchingType
     | ReturnType<typeof setError>
     | ReturnType<typeof setSendMessage>
     | ReturnType<typeof setSendNewPassword>

@@ -14,6 +14,7 @@ import Logout from './components/Login/Logout/Logout';
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import SetNewPassword from './SetNewPassword/SetNewPassword';
 import PacksList from './components/PacksList/PacksList';
+import stylesPack from './components/PacksList/PacksList.module.css';
 
 function App() {
     const dispatch = useDispatch()
@@ -24,9 +25,7 @@ function App() {
     },[dispatch])
 
     if(!isInitialization){
-        return <div style={
-            {fontSize: '40px', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}
-        }>
+        return <div className={stylesPack.preloader}>
             <Preloader/>
         </div>
     }
