@@ -1,25 +1,22 @@
-
 import React from 'react';
 import stylesHeader from './Header.module.css'
 import {NavLink} from "react-router-dom";
 
+type HeaderType = {
+    login: string
+}
 
-export function Header() {
+export function Header({login}:HeaderType) {
+
     return (
         <div className={stylesHeader.wrapper}>
             <nav className={stylesHeader.nav}>
                 <span><NavLink to={'/'}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Profile</NavLink> </span>
-                <span><NavLink to={'/login'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Login</NavLink></span>
-                <span><NavLink to={'/registration'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Registration</NavLink></span>
-                <span><NavLink to={'/newpassword'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>New password</NavLink></span>
-                <span><NavLink to={'/passwordrecovery'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Password recovery</NavLink></span>
-                <span><NavLink to={'/supertest'}
-                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Super test</NavLink></span>
+                <span><NavLink to={`/${login.toLowerCase()}`}
+                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>{login}</NavLink></span>
+                <span><NavLink to={'/packs-list'}
+                               className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Packs list</NavLink></span>
             </nav>
         </div>
     )

@@ -1,0 +1,193 @@
+.wrapper {
+    width: 90%;
+    margin: 15px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    background-color: white;
+    border-radius: 8px;
+    padding: 5px 10px;
+}
+
+.preloader {
+    font-size: 40px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.preloaderControl {
+    font-size: 30px;
+    position: absolute;
+    bottom: 2%;
+    left: 50%;
+    width: 100%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.formPacks {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    justify-content: space-around;
+    margin: 10px 0;
+    flex-wrap: wrap;
+}
+
+.BGFormPacks {
+    background: #F8F7FD;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.filterPacks {
+    text-align: center;
+}
+
+.filteredPacks {
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    background-color: #f0f1f3;
+    color: black;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.activeFilteredPacks {
+    background-color: darkblue;
+    color: white;
+    padding: 10px;
+    margin-top: 10px;
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.rangeInputWrapper {
+    margin: 30px 0 0 0;
+    text-align: center;
+}
+
+.rangeInput {
+    padding: 10px;
+    margin-top: 10px;
+    height: 30px;
+}
+
+.tableButton {
+    width: 50px;
+    height: 25px;
+    border-radius: 10px;
+    text-decoration: none;
+    border: none;
+    margin: 3px;
+    transition: 0.3s;
+    font-size: 10px;
+    color: darkblue;
+    font-weight: bolder;
+    background-color: #D7D8EF;
+}
+
+.tableButton:hover {
+    background-color: darkblue;
+    color: white;
+}
+
+.tableButton:disabled {
+    opacity: 0.2;
+}
+
+.tableButton:active {
+    color: black;
+    background-color: #f0f1f3;
+}
+
+.deleteTableButton {
+    color: white;
+    background-color: #F1453D;
+}
+
+.deleteTableButton:hover {
+    background-color: #f80a00;
+}
+
+.deleteTableButton:active {
+    color: black;
+    background-color: #ff9a94;
+}
+
+.table {
+    table-layout: fixed;
+    word-break: break-word;
+    width: 100%;
+    border: none;
+    margin-bottom: 20px;
+    border-collapse: separate;
+}
+
+/*.colName{*/
+/*    width: 40%;*/
+/*}*/
+.tableFetching {
+    opacity: 0.35;
+}
+
+.table thead {
+    text-align: center;
+    font-weight: bold;
+    border: none;
+    height: 50px;
+    background: #ECECF9;
+    font-size: 14px;
+}
+
+.logoWrapper {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+    height: 50px;
+}
+
+.sortLogo {
+    width: 25px;
+    cursor: pointer;
+}
+
+.table thead tr th:first-child {
+    border-radius: 20px 0 0 0;
+}
+
+.table thead tr th:last-child {
+    border-radius: 0 20px 0 0;
+}
+
+.table tbody td {
+    text-align: center;
+    border: none;
+    padding: 10px 15px;
+    font-size: 14px;
+    vertical-align: top;
+}
+
+.table tbody tr:nth-child(odd) {
+    background: #F8F7FD;
+}
+
+.table tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 20px;
+}
+
+.table tbody tr:last-child td:last-child {
+    border-radius: 0 0 20px 0;
+}

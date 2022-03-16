@@ -6,14 +6,17 @@ const instance = axios.create({
     withCredentials: true
 })
 
-export const authAPI = {
-    updateName(model:UpdateUserModelType) {
-        return instance.put<AxiosResponse<ResponseType>>(`auth/me/`, model)
+export const profileAPI = {
+    updateUser(model:UpdateUserModelType) {
+        return instance.put<AxiosResponse<meResponseType>>('auth/me', model)
+    },
+    setUser() {
+        return instance.post('auth/me')
     }
 }
 
 export type meResponseType = {
-    addedUser: AddedUserType
+    updatedUser: AddedUserType
     error?: string
 }
 
