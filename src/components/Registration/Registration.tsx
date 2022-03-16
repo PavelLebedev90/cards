@@ -3,7 +3,7 @@ import stylesRegistration from './Registration.module.css';
 import {Navigate} from 'react-router-dom';
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
-import {requestForRegistrationTC, setErrorActionAC} from "../../BLL/registrationPageReducer";
+import {requestForRegistrationTC, setError} from "../../BLL/registrationPageReducer";
 import eyeOff from "../../logo/eye/eyeOff.svg";
 import eye from "../../logo/eye/eye.svg";
 import Preloader from "../../features/Preloader/Preloader";
@@ -24,27 +24,27 @@ const Registration = () => {
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
-        dispatch(setErrorActionAC(''))
+        dispatch(setError(''))
         setEmailState(value)
         setValid(false)
         clearTimeout(id)
         setId(0)
         let ident = setTimeout(() => {
             if (!EMAIL_VALIDATOR.test(value)) {
-                //dispatch(setError('Enter correct email'))
+                dispatch(setError('Enter correct email'))
             } else {
                 setValid(true)
-                //dispatch(setError(''))
+                dispatch(setError(''))
             }
         }, 1500)
         setId(+ident)
     }
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setErrorActionAC(''))
+        dispatch(setError(''))
         setPasswordState(e.currentTarget.value)
     }
     const confirmPassHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        dispatch(setErrorActionAC(''))
+        dispatch(setError(''))
         setConfirmPassState(e.currentTarget.value)
     }
 

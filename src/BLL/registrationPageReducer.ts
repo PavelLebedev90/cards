@@ -21,43 +21,43 @@ export const registrationPageReducer = (state: InitialStateType = initialState, 
     }
 }
 // action creators
-export const setSuccessMessageAC = (value: boolean) => ({type: 'Registration/SET_SUCCESS_MESSAGE', value} as const)
-export const setLoaderAC = (value: boolean) => ({type: 'Registration/SET_LOADER', value} as const)
-export const setErrorActionAC = (errorText: string) => ({
+export const setSuccessMessage = (value: boolean) => ({type: 'Registration/SET_SUCCESS_MESSAGE', value} as const)
+export const setLoader = (value: boolean) => ({type: 'Registration/SET_LOADER', value} as const)
+export const setError = (errorText: string) => ({
     type: 'Registration/SET_ERROR',
     errorText
 } as const)
 
 //thunks
 export const requestForRegistrationTC = (email: string, password: string, confirmPassword: string) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setLoaderAC(true))
+    dispatch(setLoader(true))
     if (password !== confirmPassword) {
-        dispatch(setErrorActionAC('passwords don\'t match!'))
-        dispatch(setLoaderAC(false))
+        dispatch(setError('passwords don\'t match!'))
+        dispatch(setLoader(false))
     } else {
         registrationApi.registrationUser(email, password)
             .then((response) => {
                 if (response.data.error) {
-                    dispatch(setErrorActionAC(response.data.error))
-                    dispatch(setSuccessMessageAC(true))
+                    dispatch(setError(response.data.error))
+                    dispatch(setSuccessMessage(true))
                 } else {
-                    dispatch(setErrorActionAC(''))
-                    dispatch(setSuccessMessageAC(true))
+                    dispatch(setError(''))
+                    dispatch(setSuccessMessage(true))
                     console.log(response.data.addedUser)
                 }
             })
             .catch((error: AxiosError) => {
-                dispatch(setErrorActionAC(error.response?.data.error ? error.response?.data.error : 'Some error occurred...'))
+                dispatch(setError(error.response?.data.error ? error.response?.data.error : 'Some error occurred...'))
             })
             .finally(() => {
-                dispatch(setLoaderAC(false))
+                dispatch(setLoader(false))
             })
     }
 }
 
 //types
-type SetSuccessMessageActionType = ReturnType<typeof setSuccessMessageAC>
-type LoaderActionType = ReturnType<typeof setLoaderAC>
-type SetErrorActionType = ReturnType<typeof setErrorActionAC>
+type SetSuccessMessageActionType = ReturnType<typeof setSuccessMessage>
+type LoaderActionType = ReturnType<typeof setLoader>
+type SetErrorActionType = ReturnType<typeof setError>
 export type InitialStateType = typeof initialState
 type ActionsType = SetSuccessMessageActionType | LoaderActionType | SetErrorActionType
