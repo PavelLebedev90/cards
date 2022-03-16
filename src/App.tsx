@@ -3,7 +3,7 @@ import './App.css';
 import Login from './components/Login/Login';
 import Profile from './components/Profile/Profile';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import Registration from './components/registration/Registration';
+import Registration from './components/Registration/Registration';
 import FourZeroFour from './components/404/FourZeroFour';
 import {Header} from './components/Header/Header';
 import {useDispatch, useSelector} from 'react-redux';
@@ -37,7 +37,7 @@ function App() {
                 <Route path={'/login'} element={<Login/>}/>
                 <Route path={'/logout'} element={<Logout/>}/>
                 <Route path={'/'} element={<Profile/>}/>
-                <Route path={'/registration'} element={<Registration/>}/>
+                <Route path={'/Registration'} element={<Registration/>}/>
                 <Route path={'/404'} element={<FourZeroFour/>}/>
                 <Route path={'/*'} element={<Navigate to={'404'}/>}/>
                 <Route path={'/forgot'} element={<ForgotPassword/>}/>

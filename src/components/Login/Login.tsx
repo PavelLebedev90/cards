@@ -124,7 +124,7 @@ const Login = () => {
                     <span className={stylesLogin.description}>Don’t have an account? </span>
                 </div>
                 <div className={stylesLogin.toReg}>
-                    <Link to={'/registration'}>Sign up</Link>
+                    <Link to={'/Registration'}>Sign up</Link>
                 </div>
             </div>
         </div>
