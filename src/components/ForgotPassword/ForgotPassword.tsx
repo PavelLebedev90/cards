@@ -41,7 +41,7 @@ const forgotData = {
     from: 'pashoktver90@gmail.com',
     message: `<div style="background-color: lime; padding: 15px">
                   password recovery link: 
-                  <a href='http://localhost:3000/cards/#/set-new-password/$token$'>
+                  <a href='http://pavellebedev90.github.io/cards/#/set-new-password/$token$'>
                   link</a>
                   </div>`
 }

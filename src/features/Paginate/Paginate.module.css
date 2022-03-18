@@ -1,0 +1,58 @@
+.wrapper{
+    position: relative;
+    width: 100%;
+}
+.wrapperLoad{
+    opacity: 0.35;
+    pointer-events: none
+}
+
+.paginate{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    list-style: none;
+    outline: transparent;
+    padding: 0;
+}
+.paginate>li{
+    margin: 2px;
+    width: 35px;
+    height: 35px;
+}
+.paginate>li>a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border: 1px solid black;
+    outline: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.paginate>li>a:hover{
+    background-color: darkblue;
+    color:white;
+}
+.paginate>.paginateActive>a{
+    background-color: darkblue;
+    color:white;
+}
+.paginate>.paginateActive>a,
+.paginate>.paginateActive>a:hover,
+.paginate>.paginateActive>a:focus{
+    outline: transparent;
+    cursor: default;
+}
+
+.disabled {
+    outline: transparent;
+    cursor: default;
+    background-color: #8e8c8c;
+}
+.disabled:hover{
+    background-color: #8e8c8c !important;
+    cursor: default;
+}

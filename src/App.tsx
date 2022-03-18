@@ -16,20 +16,25 @@ import SetNewPassword from './SetNewPassword/SetNewPassword';
 import PacksList from './components/PacksList/PacksList';
 import stylesPack from './components/PacksList/PacksList.module.css';
 
+
 function App() {
     const dispatch = useDispatch()
     const isInitialization = useSelector<RootStateType, boolean>(state => state.app.isInitialization)
     const userId = useSelector<RootStateType, string>(state => state.login.user._id)
-    useEffect(()=>{
-        dispatch(initialization())
-    },[dispatch])
 
-    if(!isInitialization){
+    useEffect(() => {
+        if (!isInitialization) {
+            dispatch(initialization())
+        }
+    }, [dispatch])
+
+    if (!isInitialization) {
         return <div className={stylesPack.preloader}>
             <Preloader/>
         </div>
     }
-    const loginParams = userId? 'Logout' : 'Login'
+    const loginParams = userId ? 'Logout' : 'Login'
+
     return (
         <div>
             <Header login={loginParams}/>
@@ -42,7 +47,7 @@ function App() {
                 <Route path={'/*'} element={<Navigate to={'404'}/>}/>
                 <Route path={'/forgot'} element={<ForgotPassword/>}/>
                 <Route path={'/set-new-password/:token'} element={<SetNewPassword/>}/>
-                <Route path={'/packs-list'} element={<PacksList/>}/>
+                <Route path={`/packs-list`} element={<PacksList/>}/>
             </Routes>
         </div>
     );
