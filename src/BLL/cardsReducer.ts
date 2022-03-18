@@ -1,4 +1,7 @@
-import {CardFetchDataType, CardsDataType, CardType} from "../api/card-api";
+import {CardFetchDataType, cardsApi, CardsDataType, CardType} from "../api/card-api";
+import {Dispatch} from "redux";
+import {setFetching, SetFetchingType} from "./loginReducer";
+import {AxiosError} from 'axios';
 
 const initialState: InitialStateType = {
     cards: {
@@ -59,26 +62,46 @@ export const setCards = (cards: CardsDataType) => {
         payload: {cards}
     } as const
 }
-
 export const setError = (error: string) => {
     return {
         type: 'CARDS/SET-ERROR',
         payload: {error}
     } as const
 }
-
-export const setPacksFetchData = (cardsFetchData: CardFetchDataType) => {
+export const setCardsFetchData = (cardsFetchData: CardFetchDataType) => {
     return {
         type: 'CARDS/SET-CARDS-FETCH-DATA',
         payload: {cardsFetchData}
     } as const
 }
 
+//thunks
+
+export const setUserCards = (cardsFetchData?: CardFetchDataType) => (
+    dispatch: Dispatch<ActionsCardsType>
+) => {
+    dispatch(setFetching(true))
+    cardsApi.getCards(cardsFetchData)
+        .then((res) => {
+            dispatch(setCards(res.data))
+            cardsFetchData && dispatch(setCardsFetchData(cardsFetchData))
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
+            dispatch(setError(error))
+        })
+        .finally(() => {
+                dispatch(setFetching(false))
+            }
+        )
+}
+
 //types
 type ActionsCardsType =
     ReturnType<typeof setCards>
-    | ReturnType<typeof setPacksFetchData>
+    | ReturnType<typeof setCardsFetchData>
     | ReturnType<typeof setError>
+    | SetFetchingType
 
 
 type InitialStateType = {
