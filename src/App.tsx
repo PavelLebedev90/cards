@@ -15,7 +15,7 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import SetNewPassword from './SetNewPassword/SetNewPassword';
 import PacksList from './components/PacksList/PacksList';
 import stylesPack from './components/PacksList/PacksList.module.css';
-import CardList from "./components/CardList/CardList";
+import CardsList from "./components/CardList/CardsList";
 
 function App() {
     const dispatch = useDispatch()
@@ -44,7 +44,7 @@ function App() {
                 <Route path={'/forgot'} element={<ForgotPassword/>}/>
                 <Route path={'/set-new-password/:token'} element={<SetNewPassword/>}/>
                 <Route path={'/packs-list'} element={<PacksList/>}/>
-                <Route path={'/cards-list'} element={<CardList/>}/>
+                <Route path={'/cards-list'} element={<CardsList/>}/>
             </Routes>
         </div>
     );

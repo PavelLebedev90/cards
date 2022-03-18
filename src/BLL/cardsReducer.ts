@@ -77,7 +77,7 @@ export const setCardsFetchData = (cardsFetchData: CardFetchDataType) => {
 
 //thunks
 
-export const setUserCards = (cardsFetchData?: CardFetchDataType) => (
+export const getUserCards = (cardsFetchData?: CardFetchDataType) => (
     dispatch: Dispatch<ActionsCardsType>
 ) => {
     dispatch(setFetching(true))
