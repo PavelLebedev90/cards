@@ -11,9 +11,23 @@ export const instanceCard = axios.create({
 export const cardsApi = {
     getCards(cardsFetchData: CardFetchDataType = {} as CardFetchDataType) {
         return instanceCard.get<CardsDataType>(`/cards/card`, {params: cardsFetchData})
+    },
+    postNewCard(newCardData: NewCardDataType) {
+        return instanceCard.post<CardsDataType>(`/cards/card`, {card: newCardData})
     }
 }
 
+export type NewCardDataType = {
+    cardsPack_id: string
+    question: string // если не отправить будет таким
+    answer: string// если не отправить будет таким
+    grade: number // 0..5, не обязателен
+    shots: number // не обязателен
+    answerImg: string // не обязателен
+    questionImg: string // не обязателен
+    questionVideo: string // не обязателен
+    answerVideo: string // не обязателен
+}
 
 export type CardFetchDataType = {
     cardAnswer: string

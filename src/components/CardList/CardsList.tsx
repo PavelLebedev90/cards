@@ -6,19 +6,23 @@ import {RootStateType} from "../../BLL/store";
 import stylesLogin from "../Login/Login.module.css";
 import {CardFetchDataType, CardType} from "../../api/card-api";
 import {Navigate} from "react-router-dom";
-import {getUserCards} from "../../BLL/cardsReducer";
+import {addCard, getUserCards} from "../../BLL/cardsReducer";
 
 const CardsList = () => {
-    useEffect(() => {
-        dispatch(getUserCards())
-    }, [])
     const dispatch = useDispatch()
     const isLoading = useSelector<RootStateType, boolean>(state => state.cards.isLoading)
     const userId = useSelector<RootStateType, string>(state => state.login.user._id)
     const cards = useSelector<RootStateType, CardType[]>(state => state.cards.cards.cards)
+    const errorMessage = useSelector<RootStateType, string>(state => state.cards.error)
     const isAnotherUser = useSelector<RootStateType, boolean>(state => state.cards.anotherUser)
+    const cardsFetchData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
+    const onClickHandler = () => {
+        dispatch(addCard())
+    }
+    useEffect(() => {
+        dispatch(getUserCards())
+    }, [cardsFetchData])
 
-debugger
     if (!userId) {
         return (
             <Navigate to={'/login'}/>
@@ -34,7 +38,7 @@ debugger
 
                 <div className={stylesCardsList.buttonsBlock}>
                     <button
-                        // onClick={onClickHandler}
+                        onClick={onClickHandler}
                         disabled={isLoading || isAnotherUser}
                         className={stylesLogin.button}
                     >Add new card

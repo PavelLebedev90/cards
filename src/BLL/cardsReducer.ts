@@ -2,6 +2,8 @@ import {CardFetchDataType, cardsApi, CardsDataType, CardType} from "../api/card-
 import {Dispatch} from "redux";
 import {AxiosError} from 'axios';
 import {RootStateType} from "./store";
+import {ThunkDispatch} from "redux-thunk";
+import {setUserPacks} from "./packsReducer";
 
 const initialState: InitialStateType = {
     cards: {
@@ -25,7 +27,7 @@ const initialState: InitialStateType = {
     },
     error: '',
     isLoading: false,
-    anotherUser: false,
+    anotherUser: true,
 }
 
 export const cardsReducer = (state = initialState, action: ActionsCardsType): InitialStateType => {
@@ -117,16 +119,12 @@ export const getUserCards = () => (
 ) => {
     const cardsFetchData = getState().cards.cardsFetchData
     const userId = getState().login.user._id
-    const packsUserId = cardsFetchData.cardsPack_id
-    debugger
-    if (userId !== packsUserId) {
-        dispatch(setAnotherUser(true))
-    }
     dispatch(setFetchingCardsList(true))
     cardsApi.getCards(cardsFetchData)
         .then((res) => {
+            const packUserId = res.data.packUserId
+            userId === packUserId && dispatch(setAnotherUser(false))
             dispatch(setCards(res.data))
-            cardsFetchData && dispatch(setCardsFetchData(cardsFetchData))
         })
         .catch((e: AxiosError) => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console')
@@ -136,6 +134,37 @@ export const getUserCards = () => (
                 dispatch(setFetchingCardsList(false))
             }
         )
+}
+
+export const addCard = () => (
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>,
+    getState: () => RootStateType
+) => {
+    dispatch(setFetchingCardsList(true))
+    const cardsPackId = getState().cards.cardsFetchData.cardsPack_id
+    const cardsPackData = {
+        cardsPack_id: cardsPackId,
+        question: 'no question',
+        answer: 'no answer',
+        grade: 0,
+        shots: 0,
+        answerImg: '',
+        questionImg: '',
+        questionVideo: '',
+        answerVideo: '',
+    }
+    cardsApi.postNewCard(cardsPackData)
+        .then(() => {
+            dispatch(getUserCards())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        })
+        .finally(() => {
+            dispatch(setFetchingCardsList(false))
+        })
+
 }
 
 //types
