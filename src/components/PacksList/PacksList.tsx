@@ -26,11 +26,7 @@ const PacksList = () => {
     const [currentPageCount, setCurrentPageCount] = useState(1)
     const [searchParams, setSearchParams] = useSearchParams()
     const fetchCardsData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
-    const runToCardsHandler =  (id: string) => {
-        dispatch(getUserCards({...fetchCardsData, cardsPack_id: id}))
-
-
-    }
+    const [navToCardsList, setNavToCardsList] = useState<boolean>(false)
     const pageQuery = searchParams.get('page')
     //костыль для оптимизации запроса
     const [kostil, setKostil] = useState(false)
@@ -63,6 +59,11 @@ const PacksList = () => {
             <Navigate to={'/login'}/>
         )
     }
+    if (navToCardsList) {
+        return (
+            <Navigate to={'/cards-list'}/>
+        )
+    }
     const addNewPack = () => {
         dispatch(addUserPack())
     }
@@ -71,6 +72,10 @@ const PacksList = () => {
     }
     const removePack = (id: string) => {
         dispatch(deleteUserPack(id))
+    }
+    const runToCardsHandler =  (id: string) => {
+        dispatch(getUserCards({...fetchCardsData, cardsPack_id: id}))
+        setNavToCardsList(true)
     }
     const onChange = ({selected}: { selected: number }) => {
         console.log('onChange')
