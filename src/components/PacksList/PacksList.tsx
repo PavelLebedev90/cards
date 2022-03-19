@@ -11,7 +11,7 @@ import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
 import TablePacks from './TablePacks/TablePacks';
 import {CardFetchDataType} from "../../api/card-api";
-import {getUserCards} from "../../BLL/cardsReducer";
+import {getUserCards, setCardsPackId} from "../../BLL/cardsReducer";
 
 
 const PacksList = () => {
@@ -74,7 +74,7 @@ const PacksList = () => {
         dispatch(deleteUserPack(id))
     }
     const runToCardsHandler =  (id: string) => {
-        dispatch(getUserCards({...fetchCardsData, cardsPack_id: id}))
+        dispatch(setCardsPackId(id))
         setNavToCardsList(true)
     }
     const onChange = ({selected}: { selected: number }) => {

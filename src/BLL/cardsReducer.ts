@@ -1,7 +1,7 @@
 import {CardFetchDataType, cardsApi, CardsDataType, CardType} from "../api/card-api";
 import {Dispatch} from "redux";
-import {setFetching, SetFetchingType} from "./loginReducer";
 import {AxiosError} from 'axios';
+import {RootStateType} from "./store";
 
 const initialState: InitialStateType = {
     cards: {
@@ -24,6 +24,8 @@ const initialState: InitialStateType = {
         pageCount: 50,
     },
     error: '',
+    isLoading: false,
+    anotherUser: false,
 }
 
 export const cardsReducer = (state = initialState, action: ActionsCardsType): InitialStateType => {
@@ -49,6 +51,21 @@ export const cardsReducer = (state = initialState, action: ActionsCardsType): In
                 ...state,
                 ...action.payload
             }
+        case "CARDS/SET-FETCH":
+            return {
+                ...state,
+                ...action.payload
+            }
+        case "CARDS/SET-ANOTHER-USER":
+            return {
+                ...state,
+                ...action.payload
+            }
+        case "CARDS/SET-CARDS-PACK-ID":
+            return {
+                ...state,
+                cardsFetchData: {...state.cardsFetchData, cardsPack_id: action.payload.cardsPack_id}
+            }
         default:
             return state
     }
@@ -68,19 +85,44 @@ export const setError = (error: string) => {
         payload: {error}
     } as const
 }
+export const setFetchingCardsList = (isLoading: boolean) => {
+    return {
+        type: 'CARDS/SET-FETCH',
+        payload: {isLoading}
+    } as const
+}
 export const setCardsFetchData = (cardsFetchData: CardFetchDataType) => {
     return {
         type: 'CARDS/SET-CARDS-FETCH-DATA',
         payload: {cardsFetchData}
     } as const
 }
+export const setAnotherUser = (anotherUser: boolean) => {
+    return {
+        type: 'CARDS/SET-ANOTHER-USER',
+        payload: {anotherUser}
+    } as const
+}
+export const setCardsPackId = (cardsPack_id: string) => {
+    return {
+        type: 'CARDS/SET-CARDS-PACK-ID',
+        payload: {cardsPack_id}
+    } as const
+}
 
 //thunks
 
-export const getUserCards = (cardsFetchData?: CardFetchDataType) => (
-    dispatch: Dispatch<ActionsCardsType>
+export const getUserCards = () => (
+    dispatch: Dispatch<ActionsCardsType>, getState: () => RootStateType
 ) => {
-    dispatch(setFetching(true))
+    const cardsFetchData = getState().cards.cardsFetchData
+    const userId = getState().login.user._id
+    const packsUserId = cardsFetchData.cardsPack_id
+    debugger
+    if (userId !== packsUserId) {
+        dispatch(setAnotherUser(true))
+    }
+    dispatch(setFetchingCardsList(true))
     cardsApi.getCards(cardsFetchData)
         .then((res) => {
             dispatch(setCards(res.data))
@@ -91,7 +133,7 @@ export const getUserCards = (cardsFetchData?: CardFetchDataType) => (
             dispatch(setError(error))
         })
         .finally(() => {
-                dispatch(setFetching(false))
+                dispatch(setFetchingCardsList(false))
             }
         )
 }
@@ -101,11 +143,15 @@ type ActionsCardsType =
     ReturnType<typeof setCards>
     | ReturnType<typeof setCardsFetchData>
     | ReturnType<typeof setError>
-    | SetFetchingType
+    | ReturnType<typeof setFetchingCardsList>
+    | ReturnType<typeof setAnotherUser>
+    | ReturnType<typeof setCardsPackId>
 
 
-type InitialStateType = {
+export type InitialStateType = {
     cards: CardsDataType
     cardsFetchData: CardFetchDataType
     error: string
+    isLoading: boolean
+    anotherUser: boolean
 }
