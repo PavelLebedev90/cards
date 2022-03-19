@@ -13,11 +13,13 @@ type TablePacksType = {
     packs: PacksDataType
     removePack: (id:string)=>void
     changePackName: (id:string) =>void
+    runToCards: (id: string) => void
 }
 
 const TablePacks = (props:TablePacksType) => {
     const imageSortArrow = props.sortPacks === '1cardsCount' ? downArrow : upArrow
     const tableIsFetchingClass = props.isFetching ? stylesPack.tableFetching : ''
+
     return (
         <table className={`${stylesPack.table} ${tableIsFetchingClass}`}>
             <thead>
@@ -58,9 +60,16 @@ const TablePacks = (props:TablePacksType) => {
                                     >edit
                                     </button>
                                     <button className={`${stylesPack.tableButton}`}>learn</button>
+                                    <button className={`${stylesPack.tableButton}`}
+                                            onClick={ () => {props.runToCards(pack._id)}}>open</button>
                                 </>
                                 :
-                                <button className={`${stylesPack.tableButton}`}>learn</button>
+                                <>
+                                    <button className={`${stylesPack.tableButton}`}>learn</button>
+                                    <button className={`${stylesPack.tableButton}`}
+                                            onClick={ () => {props.runToCards(pack._id)}}>open</button>
+                                </>
+
                             }
 
                         </td>

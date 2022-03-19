@@ -30,7 +30,7 @@ const CardsList = () => {
         <div className={stylesCardsList.wrapper}>
 
             <h1 className={stylesCardsList.header}>
-                Pack list
+                Cards list
             </h1>
             <div className={stylesCardsList.formPacks}>
 
@@ -39,7 +39,7 @@ const CardsList = () => {
                         // onClick={onClickHandler}
                         //       disabled={!!error || !valid}
                         className={stylesLogin.button}
-                    >Add new pack
+                    >Add new card
                     </button>
                     {/*}*/}
                 </div>

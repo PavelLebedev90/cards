@@ -10,6 +10,8 @@ import {PacksDataType, PacksFetchDataType} from '../../api/pack-api';
 import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
 import TablePacks from './TablePacks/TablePacks';
+import {CardFetchDataType} from "../../api/card-api";
+import {getUserCards} from "../../BLL/cardsReducer";
 
 
 const PacksList = () => {
@@ -23,6 +25,12 @@ const PacksList = () => {
     const [initialPage, setInitialPage] = useState(packs.page)
     const [currentPageCount, setCurrentPageCount] = useState(1)
     const [searchParams, setSearchParams] = useSearchParams()
+    const fetchCardsData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
+    const runToCardsHandler =  (id: string) => {
+        dispatch(getUserCards({...fetchCardsData, cardsPack_id: id}))
+
+
+    }
     const pageQuery = searchParams.get('page')
     //костыль для оптимизации запроса
     const [kostil, setKostil] = useState(false)
@@ -94,6 +102,7 @@ const PacksList = () => {
                         packs={packs}
                         changePackName={changePackName}
                         removePack={removePack}
+                        runToCards={runToCardsHandler}
             />
 
             <Paginate pageCount={currentPageCount}
