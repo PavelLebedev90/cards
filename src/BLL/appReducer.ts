@@ -67,9 +67,10 @@ export const initialization = ()=>(
             dispatch(setInitialization(true))
         })
 }
-
+export type SetLoggedInType =  ReturnType<typeof setloggedIn>
+export type SetInitializationType =  ReturnType<typeof setInitialization>
 export type ActionAppType =
-    ReturnType<typeof setloggedIn>
-| ReturnType<typeof setInitialization>
+    SetLoggedInType
+| SetInitializationType
 | ReturnType<typeof setError>
 | SetUserDataType

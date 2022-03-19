@@ -1,7 +1,8 @@
 import {packApi, PacksDataType, PacksFetchDataType, PackType} from '../api/pack-api';
 import {Dispatch} from 'redux';
 import {AxiosError} from 'axios';
-import {setFetching, SetFetchingType} from './loginReducer';
+import {RootStateType} from './store';
+import {ThunkDispatch} from 'redux-thunk';
 
 
 let initialPacksState: InitialPacksStateType = {
@@ -10,7 +11,7 @@ let initialPacksState: InitialPacksStateType = {
         cardPacksTotalCount: 0,
         maxCardsCount: 0,
         minCardsCount: 0,
-        page: 0,
+        page: 1,
         pageCount: 0,
     },
     packsFetchData: {
@@ -18,11 +19,12 @@ let initialPacksState: InitialPacksStateType = {
         min: 0,
         max: 0,
         sortPacks: '1cardsCount',
-        page: 0,
-        pageCount: 50,
+        page: 1,
+        pageCount: 10,
         user_id: ''
     },
     error: '',
+    isFetching: false,
 }
 
 export const packsReducer = (state = initialPacksState, action: ActionPacksType): InitialPacksStateType => {
@@ -33,7 +35,7 @@ export const packsReducer = (state = initialPacksState, action: ActionPacksType)
                 packs: {
                     ...state.packs,
                     ...action.payload.packs
-                }
+                },
             }
         case 'PACKS/SET-PACKS-FETCH-DATA':
             return {
@@ -44,6 +46,7 @@ export const packsReducer = (state = initialPacksState, action: ActionPacksType)
                 }
             }
         case 'PACKS/SET-ERROR':
+        case 'PACKS/SET-FETCHING':
             return {
                 ...state,
                 ...action.payload
@@ -78,15 +81,71 @@ export const setPacksFetchData = (packsFetchData: PacksFetchDataType) => {
         }
     } as const
 }
-
-export const setUserPacks = (packsFetchData?: PacksFetchDataType) => (
-    dispatch: Dispatch<ActionPacksType>
+export const setFetching = (isFetching: boolean) => {
+    return {
+        type: 'PACKS/SET-FETCHING',
+        payload: {
+            isFetching
+        }
+    } as const
+}
+export const setUserPacks = () => (
+    dispatch: Dispatch<ActionPacksType>,
+    getState: () => RootStateType
 ) => {
     dispatch(setFetching(true))
+    const packsFetchData = getState().packs.packsFetchData
     packApi.getPacks(packsFetchData)
         .then((res) => {
             dispatch(setPacks(res.data))
-            packsFetchData && dispatch(setPacksFetchData(packsFetchData))
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        }).finally(() => {
+            dispatch(setFetching(false))
+        }
+    )
+}
+export const addUserPack = () => (
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
+) => {
+    dispatch(setFetching(true))
+    packApi.addPack()
+        .then(() => {
+            dispatch(setUserPacks())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        }).finally(() => {
+            dispatch(setFetching(false))
+        }
+    )
+}
+export const changeUserPack = (packId:string) =>(
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
+) =>{
+    dispatch(setFetching(true))
+    packApi.changePack(packId)
+        .then(() => {
+            dispatch(setUserPacks())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        }).finally(() => {
+            dispatch(setFetching(false))
+        }
+    )
+}
+export const deleteUserPack = (packId:string) =>(
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
+) =>{
+    dispatch(setFetching(true))
+    packApi.deletePack(packId)
+        .then(() => {
+            dispatch(setUserPacks())
         })
         .catch((e: AxiosError) => {
             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
@@ -97,15 +156,15 @@ export const setUserPacks = (packsFetchData?: PacksFetchDataType) => (
     )
 }
 
-
 type InitialPacksStateType = {
     packs: PacksDataType
     packsFetchData: PacksFetchDataType
     error: string
+    isFetching: boolean,
 }
 type ActionPacksType =
     ReturnType<typeof setPacks>
     | ReturnType<typeof setPacksFetchData>
-    | SetFetchingType
+    | ReturnType<typeof setFetching>
     | ReturnType<typeof setError>
 

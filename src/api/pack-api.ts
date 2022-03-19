@@ -1,10 +1,10 @@
 import axios from 'axios';
-import {instanceLogin} from './auth-api';
+
 
 
 export const instancePack = axios.create({
     baseURL:
-    // 'https://neko-back.herokuapp.com/2.0'
+    // 'https://neko-back.herokuapp.com/2.0',
         process.env.REACT_APP_BACK_URL
         || 'http://localhost:7542/2.0/',
     withCredentials: true,
@@ -12,8 +12,20 @@ export const instancePack = axios.create({
 
 export const packApi = {
     getPacks(packsFetchData: PacksFetchDataType = {} as PacksFetchDataType){
-        // return instanceLogin.get<PacksDataType>(`/cards/pack?pageCount=${50}`)
-        return instanceLogin.get<PacksDataType>(`/cards/pack`,{params: packsFetchData})
+        return instancePack.get<PacksDataType>(`/cards/pack`,{params: packsFetchData})
+    },
+    addPack(){
+        return instancePack.post('/cards/pack', {cardsPack: {name: "my Pack"}})
+    },
+    changePack(packId:string){
+        return instancePack.put('/cards/pack',
+            {cardsPack: {
+                _id: packId,
+                    name: "my NEW Pack"
+                }})
+    },
+    deletePack(packId:string){
+        return instancePack.delete(`/cards/pack?id=${packId}`)
     }
 }
 

@@ -4,6 +4,7 @@ import {NavLink} from "react-router-dom";
 
 type HeaderType = {
     login: string
+
 }
 
 export function Header({login}:HeaderType) {
@@ -15,7 +16,7 @@ export function Header({login}:HeaderType) {
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Profile</NavLink> </span>
                 <span><NavLink to={`/${login.toLowerCase()}`}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>{login}</NavLink></span>
-                <span><NavLink to={'/packs-list'}
+                <span><NavLink to={`/packs-list`}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Packs list</NavLink></span>
                 <span><NavLink to={'/cards-list'}
                                className={(navData) => navData.isActive ? `${stylesHeader.nav_link}` : ''}>Cards list</NavLink></span>
