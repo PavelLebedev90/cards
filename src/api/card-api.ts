@@ -14,6 +14,9 @@ export const cardsApi = {
     },
     postNewCard(newCardData: NewCardDataType) {
         return instanceCard.post<CardsDataType>(`/cards/card`, {card: newCardData})
+    },
+    deleteCard(idCard: string) {
+        return instanceCard.delete(`/cards/card?id=${idCard}`)
     }
 }
 

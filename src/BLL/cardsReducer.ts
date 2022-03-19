@@ -3,7 +3,6 @@ import {Dispatch} from "redux";
 import {AxiosError} from 'axios';
 import {RootStateType} from "./store";
 import {ThunkDispatch} from "redux-thunk";
-import {setUserPacks} from "./packsReducer";
 
 const initialState: InitialStateType = {
     cards: {
@@ -164,7 +163,22 @@ export const addCard = () => (
         .finally(() => {
             dispatch(setFetchingCardsList(false))
         })
+}
 
+export const deleteCard = (id: string) => (
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>) => {
+    dispatch(setFetchingCardsList(true))
+    cardsApi.deleteCard(id)
+        .then(() => {
+            dispatch(getUserCards())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        })
+        .finally(() => {
+            dispatch(setFetchingCardsList(false))
+        })
 }
 
 //types

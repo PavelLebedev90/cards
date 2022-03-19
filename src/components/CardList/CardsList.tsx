@@ -6,22 +6,26 @@ import {RootStateType} from "../../BLL/store";
 import stylesLogin from "../Login/Login.module.css";
 import {CardFetchDataType, CardType} from "../../api/card-api";
 import {Navigate} from "react-router-dom";
-import {addCard, getUserCards} from "../../BLL/cardsReducer";
+import {addCard, deleteCard, getUserCards} from "../../BLL/cardsReducer";
+import ActionBlock from "./ActionBlock/ActionBlock";
 
 const CardsList = () => {
     const dispatch = useDispatch()
     const isLoading = useSelector<RootStateType, boolean>(state => state.cards.isLoading)
     const userId = useSelector<RootStateType, string>(state => state.login.user._id)
     const cards = useSelector<RootStateType, CardType[]>(state => state.cards.cards.cards)
-    const errorMessage = useSelector<RootStateType, string>(state => state.cards.error)
+    //const errorMessage = useSelector<RootStateType, string>(state => state.cards.error)
     const isAnotherUser = useSelector<RootStateType, boolean>(state => state.cards.anotherUser)
     const cardsFetchData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
     const onClickHandler = () => {
         dispatch(addCard())
     }
+    const deleteCardHandler = (id: string) => {
+        dispatch(deleteCard(id))
+    }
     useEffect(() => {
         dispatch(getUserCards())
-    }, [cardsFetchData])
+    }, [cardsFetchData, dispatch])
 
     if (!userId) {
         return (
@@ -71,19 +75,12 @@ const CardsList = () => {
                             <td>{new Date(card.created).toLocaleDateString()}</td>
                             <td>{card.grade}</td>
                             <td>
-                                {isAnotherUser
-                                    ?
-                                    <>
-                                        <button className={`${stylesCardsList.tableButton}`}
-                                                disabled={isLoading}>update
-                                        </button>
-                                        <button
-                                            className={`${stylesCardsList.tableButton} ${stylesCardsList.deleteTableButton}`}
-                                            disabled={isLoading}>delete
-                                        </button>
-                                    </>
-                                    : <div/>
-                                }
+                                <ActionBlock
+                                    isAnotherUser={isAnotherUser}
+                                    isLoading={isLoading}
+                                    idCard={card._id}
+                                    deleteCardHandler={deleteCardHandler}
+                                />
                             </td>
                         </tr>
                     })
