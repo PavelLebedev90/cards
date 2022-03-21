@@ -5,12 +5,13 @@ import {Navigate, useSearchParams} from 'react-router-dom';
 import stylesPack from './PacksList.module.css'
 import stylesLogin from '../Login/Login.module.css';
 import {ValueNumberOfCardsType} from '../../features/SuperInput/SuperInput';
-import {changeUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
+import {addUserPack, changeUserPack, deleteUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
 import {PacksDataType, PacksFetchDataType} from '../../api/pack-api';
 import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
-import TablePacks, {ModalCRUDType} from './TablePacks/TablePacks';
-import {setOpenModal} from '../../BLL/appReducer';
+import TablePacks from './TablePacks/TablePacks';
+import {CardFetchDataType} from "../../api/card-api";
+import {getUserCards, setCardsPackId} from "../../BLL/cardsReducer";
 
 
 const PacksList = () => {
@@ -25,6 +26,8 @@ const PacksList = () => {
     const [initialPage, setInitialPage] = useState(packs.page)
     const [currentPageCount, setCurrentPageCount] = useState(1)
     const [searchParams, setSearchParams] = useSearchParams()
+    const fetchCardsData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
+    const [navToCardsList, setNavToCardsList] = useState<boolean>(false)
     const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false)
     const [modalAddIsOpen, setModalAddIsOpen] = useState(false)
     const [packId, setPackId] = useState('')
@@ -73,6 +76,7 @@ const PacksList = () => {
     }, [packsFetchData])
 
 
+    console.log('Packs Render')
     if (!userId) {
         return (
             <Navigate to={'/login'}/>
@@ -80,6 +84,13 @@ const PacksList = () => {
     }
     const addNewPack = (packTitle:string) => {
         dispatch(changeUserPack('addPack', packTitle))
+    if (navToCardsList) {
+        return (
+            <Navigate to={'/cards-list'}/>
+        )
+    }
+    const addNewPack = () => {
+        dispatch(addUserPack())
     }
     const changePackName = (id: string) => {
         dispatch(changeUserPack('changePack', id))
@@ -87,7 +98,12 @@ const PacksList = () => {
     const removePack = (id: string) => {
         dispatch(changeUserPack('deletePack', id))
     }
+    const runToCardsHandler =  (id: string) => {
+        dispatch(setCardsPackId(id))
+        setNavToCardsList(true)
+    }
     const onChange = ({selected}: { selected: number }) => {
+        console.log('onChange')
         if (kostil) {
             dispatch(setPacksFetchData({...packsFetchData, page: selected + 1}))
         } else {
@@ -124,6 +140,7 @@ const PacksList = () => {
                         packId={packId}
                         opening={opening}
                         setModalDeleteIsOpen={setModalDeleteIsOpen}
+                        runToCards={runToCardsHandler}
             />
 
             <Paginate pageCount={currentPageCount}

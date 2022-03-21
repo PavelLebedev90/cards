@@ -1,8 +1,8 @@
 import {
     InitialStateType,
     registrationPageReducer,
-    setErrorActionAC, setLoaderAC,
-    setSuccessMessageAC
+    setError, setLoader,
+    setSuccessMessage
 } from "../BLL/registrationPageReducer";
 
 let startState: InitialStateType
@@ -15,7 +15,7 @@ beforeEach(() => {
 })
 
 test('correct error message should be set', () => {
-    const action = setErrorActionAC('Error!!!')
+    const action = setError('Error!!!')
     const endAppState = registrationPageReducer(startState, action)
     expect(endAppState.error).toBe('Error!!!')
     expect(endAppState.loader).toBe(false)
@@ -23,7 +23,7 @@ test('correct error message should be set', () => {
 });
 
 test('correct successMessage should be set', () => {
-    const action = setSuccessMessageAC(true)
+    const action = setSuccessMessage(true)
     const endAppState = registrationPageReducer(startState, action)
     expect(endAppState.error).toBe('')
     expect(endAppState.loader).toBe(false)
@@ -31,7 +31,7 @@ test('correct successMessage should be set', () => {
 });
 
 test('correct loader should be set', () => {
-    const action = setLoaderAC(true)
+    const action = setLoader(true)
     const endAppState = registrationPageReducer(startState, action)
     expect(endAppState.error).toBe('')
     expect(endAppState.loader).toBe(true)
