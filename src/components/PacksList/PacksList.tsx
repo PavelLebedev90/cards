@@ -5,11 +5,12 @@ import {Navigate, useSearchParams} from 'react-router-dom';
 import stylesPack from './PacksList.module.css'
 import stylesLogin from '../Login/Login.module.css';
 import {ValueNumberOfCardsType} from '../../features/SuperInput/SuperInput';
-import {addUserPack, changeUserPack, deleteUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
+import {changeUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
 import {PacksDataType, PacksFetchDataType} from '../../api/pack-api';
 import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
-import TablePacks from './TablePacks/TablePacks';
+import TablePacks, {ModalCRUDType} from './TablePacks/TablePacks';
+import {setOpenModal} from '../../BLL/appReducer';
 
 
 const PacksList = () => {
@@ -19,17 +20,21 @@ const PacksList = () => {
     const isFetching = useSelector<RootStateType, boolean>(state => state.packs.isFetching)
     const packs = useSelector<RootStateType, PacksDataType>(state => state.packs.packs)
     const packsFetchData = useSelector<RootStateType, PacksFetchDataType>(state => state.packs.packsFetchData)
+
     const [value, setValue] = useState<ValueNumberOfCardsType>({min: 0, max: maxCardsCount});
     const [initialPage, setInitialPage] = useState(packs.page)
     const [currentPageCount, setCurrentPageCount] = useState(1)
     const [searchParams, setSearchParams] = useSearchParams()
+    const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false)
+    const [modalAddIsOpen, setModalAddIsOpen] = useState(false)
+    const [packId, setPackId] = useState('')
     const pageQuery = searchParams.get('page')
     //костыль для оптимизации запроса
     const [kostil, setKostil] = useState(false)
     useEffect(() => {
         setValue({...value, max: maxCardsCount})
         setInitialPage(packs.page)
-        setSearchParams({page:packs.page.toString()})
+        setSearchParams({page: packs.page.toString()})
         setCurrentPageCount(Math.ceil(packs.cardPacksTotalCount ? packs.cardPacksTotalCount / packs.pageCount : 1))
     }, [maxCardsCount, packs.page])
 
@@ -42,30 +47,47 @@ const PacksList = () => {
             dispatch(setPacksFetchData({...packsFetchData, sortPacks: down}))
         }
     }
+    function closing(modal: ModalCRUDType) {
+        if (modal === 'delete') {
+            setModalDeleteIsOpen(false)
+        }
+        if (modal === 'add') {
+            setModalAddIsOpen(false)
+        }
+        dispatch(setOpenModal(false))
+    }
 
+    function opening(modal: ModalCRUDType, packId?: string) {
+        if (modal === 'delete' && packId) {
+            setPackId(packId)
+            setModalDeleteIsOpen(true)
+        }
+        if (modal === 'add') {
+            setModalAddIsOpen(true)
+        }
+        dispatch(setOpenModal(true))
+    }
 
     useEffect(() => {
         dispatch(setUserPacks())
     }, [packsFetchData])
 
 
-    console.log('Packs Render')
     if (!userId) {
         return (
             <Navigate to={'/login'}/>
         )
     }
-    const addNewPack = () => {
-        dispatch(addUserPack())
+    const addNewPack = (packTitle:string) => {
+        dispatch(changeUserPack('addPack', packTitle))
     }
     const changePackName = (id: string) => {
-        dispatch(changeUserPack(id))
+        dispatch(changeUserPack('changePack', id))
     }
     const removePack = (id: string) => {
-        dispatch(deleteUserPack(id))
+        dispatch(changeUserPack('deletePack', id))
     }
     const onChange = ({selected}: { selected: number }) => {
-        console.log('onChange')
         if (kostil) {
             dispatch(setPacksFetchData({...packsFetchData, page: selected + 1}))
         } else {
@@ -84,16 +106,24 @@ const PacksList = () => {
                           isFetching={isFetching}
                           maxCardsCount={maxCardsCount}
                           addNewPack={addNewPack}
+                          closing={closing}
+                          opening={opening}
+                          modalAddIsOpen={modalAddIsOpen}
+                          setModalAddIsOpen={setModalAddIsOpen}
             />
 
             <TablePacks setSortArrow={setSortArrow}
                         isFetching={isFetching}
                         sortPacks={packsFetchData.sortPacks}
                         userId={userId}
-                        packsFetchUserId={packsFetchData.user_id}
                         packs={packs}
                         changePackName={changePackName}
                         removePack={removePack}
+                        closing={closing}
+                        modalDeleteIsOpen={modalDeleteIsOpen}
+                        packId={packId}
+                        opening={opening}
+                        setModalDeleteIsOpen={setModalDeleteIsOpen}
             />
 
             <Paginate pageCount={currentPageCount}

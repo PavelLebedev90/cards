@@ -21,12 +21,13 @@ function App() {
     const dispatch = useDispatch()
     const isInitialization = useSelector<RootStateType, boolean>(state => state.app.isInitialization)
     const userId = useSelector<RootStateType, string>(state => state.login.user._id)
+    const isOpenModal = useSelector<RootStateType, boolean>(state => state.app.isOpenModal)
 
     useEffect(() => {
         if (!isInitialization) {
             dispatch(initialization())
         }
-    }, [dispatch])
+    }, [])
 
     if (!isInitialization) {
         return <div className={stylesPack.preloader}>
@@ -34,9 +35,10 @@ function App() {
         </div>
     }
     const loginParams = userId ? 'Logout' : 'Login'
+    const bodyClass = isOpenModal ? 'filterBody' : '';
 
     return (
-        <div>
+        <div className={bodyClass}>
             <Header login={loginParams}/>
             <Routes>
                 <Route path={'/login'} element={<Login/>}/>

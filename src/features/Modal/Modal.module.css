@@ -1,0 +1,35 @@
+.closeModal {
+    position: absolute;
+    cursor: pointer;
+    margin: 2px;
+    width: 30px;
+    height: 30px;
+    top: 3%;
+    right: 4%;
+}
+
+.closeModal:before {
+    transition: 0.5s;
+    content: '';
+    width: 25px;
+    height: 3px;
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    background-color: black;
+    border-radius: 2px;
+    transform: rotate(-45deg);
+}
+
+.closeModal:after {
+    transition: 0.5s;
+    content: '';
+    width: 25px;
+    height: 3px;
+    position: fixed;
+    top: 10%;
+    right: 5%;
+    background-color: black;
+    border-radius: 2px;
+    transform: rotate(45deg);
+}

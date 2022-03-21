@@ -1,4 +1,4 @@
-import {packApi, PacksDataType, PacksFetchDataType, PackType} from '../api/pack-api';
+import {packApi, PackApiKeys, PacksDataType, PacksFetchDataType, PackType} from '../api/pack-api';
 import {Dispatch} from 'redux';
 import {AxiosError} from 'axios';
 import {RootStateType} from './store';
@@ -107,11 +107,11 @@ export const setUserPacks = () => (
         }
     )
 }
-export const addUserPack = () => (
+export const changeUserPack = (keyApi:PackApiKeys, arg:string) => (
     dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
 ) => {
     dispatch(setFetching(true))
-    packApi.addPack()
+    packApi[keyApi](arg)
         .then(() => {
             dispatch(setUserPacks())
         })
@@ -123,38 +123,38 @@ export const addUserPack = () => (
         }
     )
 }
-export const changeUserPack = (packId:string) =>(
-    dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
-) =>{
-    dispatch(setFetching(true))
-    packApi.changePack(packId)
-        .then(() => {
-            dispatch(setUserPacks())
-        })
-        .catch((e: AxiosError) => {
-            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
-            dispatch(setError(error))
-        }).finally(() => {
-            dispatch(setFetching(false))
-        }
-    )
-}
-export const deleteUserPack = (packId:string) =>(
-    dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
-) =>{
-    dispatch(setFetching(true))
-    packApi.deletePack(packId)
-        .then(() => {
-            dispatch(setUserPacks())
-        })
-        .catch((e: AxiosError) => {
-            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
-            dispatch(setError(error))
-        }).finally(() => {
-            dispatch(setFetching(false))
-        }
-    )
-}
+// export const changeUserPack = (packId:string) =>(
+//     dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
+// ) =>{
+//     dispatch(setFetching(true))
+//     packApi.changePack(packId)
+//         .then(() => {
+//             dispatch(setUserPacks())
+//         })
+//         .catch((e: AxiosError) => {
+//             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+//             dispatch(setError(error))
+//         }).finally(() => {
+//             dispatch(setFetching(false))
+//         }
+//     )
+// }
+// export const deleteUserPack = (packId:string) =>(
+//     dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
+// ) =>{
+//     dispatch(setFetching(true))
+//     packApi.deletePack(packId)
+//         .then(() => {
+//             dispatch(setUserPacks())
+//         })
+//         .catch((e: AxiosError) => {
+//             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+//             dispatch(setError(error))
+//         }).finally(() => {
+//             dispatch(setFetching(false))
+//         }
+//     )
+// }
 
 type InitialPacksStateType = {
     packs: PacksDataType

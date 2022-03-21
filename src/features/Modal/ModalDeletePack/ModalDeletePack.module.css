@@ -1,0 +1,22 @@
+.header{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px 0 25px 25px;
+}
+.description{
+    padding: 25px 0;
+    text-align: center;
+    line-height: 25px;
+}
+.buttonsBlock{
+    display: flex;
+    justify-content: space-around;
+}
+.button{
+    width: 120px;
+    height: 35px;
+    margin-top: 25px;
+    font-size: 20px;
+    font-weight: normal;
+    border-radius: 20px;
+}
