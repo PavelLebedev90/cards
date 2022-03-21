@@ -74,7 +74,7 @@ const TablePacks = (props: TablePacksType) => {
                         <td>{new Date(pack.created).toLocaleDateString()}</td>
                         <td>{pack.user_name}</td>
                         <td>
-                            {props.userId === props.packsFetchUserId
+                            {props.userId === pack._id
                                 ?
                                 <>
                                     <button

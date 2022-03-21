@@ -3,7 +3,6 @@ import './App.css';
 import Login from './components/Login/Login';
 import Profile from './components/Profile/Profile';
 import {Navigate, Route, Routes} from 'react-router-dom';
-import Registration from './components/Registration/Registration';
 import FourZeroFour from './components/404/FourZeroFour';
 import {Header} from './components/Header/Header';
 import {useDispatch, useSelector} from 'react-redux';
@@ -16,6 +15,7 @@ import SetNewPassword from './SetNewPassword/SetNewPassword';
 import PacksList from './components/PacksList/PacksList';
 import stylesPack from './components/PacksList/PacksList.module.css';
 import CardsList from "./components/CardList/CardsList";
+import Registration from './components/registration/Registration';
 
 function App() {
     const dispatch = useDispatch()

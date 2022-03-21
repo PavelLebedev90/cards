@@ -5,13 +5,14 @@ import {Navigate, useSearchParams} from 'react-router-dom';
 import stylesPack from './PacksList.module.css'
 import stylesLogin from '../Login/Login.module.css';
 import {ValueNumberOfCardsType} from '../../features/SuperInput/SuperInput';
-import {addUserPack, changeUserPack, deleteUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
+import {changeUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
 import {PacksDataType, PacksFetchDataType} from '../../api/pack-api';
 import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
-import TablePacks from './TablePacks/TablePacks';
-import {CardFetchDataType} from "../../api/card-api";
-import {getUserCards, setCardsPackId} from "../../BLL/cardsReducer";
+import TablePacks, {ModalCRUDType} from './TablePacks/TablePacks';
+import {CardFetchDataType} from '../../api/card-api';
+import {setCardsPackId} from '../../BLL/cardsReducer';
+import {setOpenModal} from '../../BLL/appReducer';
 
 
 const PacksList = () => {
@@ -89,9 +90,8 @@ const PacksList = () => {
             <Navigate to={'/cards-list'}/>
         )
     }
-    const addNewPack = () => {
-        dispatch(addUserPack())
     }
+
     const changePackName = (id: string) => {
         dispatch(changeUserPack('changePack', id))
     }
@@ -152,4 +152,4 @@ const PacksList = () => {
     );
 };
 
-export default PacksList;
+export default PacksList
