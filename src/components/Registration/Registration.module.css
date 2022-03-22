@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+.mainBlock {
+    background-color: white;
+    max-width: 400px;
+    border-radius: 8px;
+    margin: 15px auto;
+    display: flex;
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    padding: 25px 65px;
+}
+.header {
+    font-weight: bold;
+    color: darkblue;
+}
+
+h1 {
+    margin-top: 25px;
+    margin-bottom: 0;
+    font-size: 26px;
+    font-weight: 600;
+    line-height: 39px;
+    font-style: normal;
+
+}
+
+h3 {
+    margin-top: 32px;
+    margin-bottom: 0;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 22px;
+    line-height: 33px;
+}
+
+.inputsBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 39px 0 0 0;
+
+}
+
+.inputsBlock input {
+    resize: both;
+    margin-bottom: 30px;
+    height: 40px;
+    width: 280px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    outline: none;
+    font-size: 20px;
+    padding: 5px;
+    background-color: white;
+    -webkit-box-shadow: inset 0 0 0 50px #fff;
+    -webkit-text-fill-color: #000;
+
+}
+
+.inputsBlock input:-webkit-autofill {
+    font-size: inherit;
+}
+
+.inputsBlock input:focus {
+    border-color: #7051ff;
+}
+
+.inputPassword {
+    position: relative;
+}
+
+.buttonsBlock {
+    margin: 30px 0 50px 0;
+}
+
+.buttonsBlockPosition {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error {
+    box-sizing: content-box;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translateX(-50%);
+    font-size: 15px;
+    font-weight: bolder;
+    color: rgba(255, 93, 64, 0.98);
+}
+
+.eye {
+    cursor: pointer;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+    right: 2%;
+    background-color: white;
+}
+
+.button {
+    width: 200px;
+    height: 30px;
+    border-radius: 80px;
+    text-decoration: none;
+    border: none;
+    margin: 15px 5px 0;
+    transition: 0.3s;
+    font-size: 20px;
+    color: white;
+    background-color: darkblue;
+}
+
+.button:hover {
+    opacity: 0.5;
+}
+
+.button:disabled {
+    opacity: 0.2;
+}
+
+.button:active {
+    color: black;
+    background-color: #f0f1f3;
+}
