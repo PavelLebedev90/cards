@@ -20,7 +20,7 @@ type TablePacksType = {
     setModalDeleteIsOpen: (value:boolean)=>void
     removePack: (id:string)=>void
     changePackName: (id:string) =>void
-    runToCards: (id: string) => void
+    // runToCards: (id: string) => void
 }
 export type ModalCRUDType = 'delete' | 'add' | 'change'
 const TablePacks = (props: TablePacksType) => {
@@ -88,13 +88,15 @@ const TablePacks = (props: TablePacksType) => {
                                     </button>
                                     <button className={`${stylesPack.tableButton}`}>learn</button>
                                     <button className={`${stylesPack.tableButton}`}
-                                            onClick={ () => {props.runToCards(pack._id)}}>open</button>
+                                            // onClick={ () => {props.runToCards(pack._id)}}
+                                    >open</button>
                                 </>
                                 :
                                 <>
                                     <button className={`${stylesPack.tableButton}`}>learn</button>
                                     <button className={`${stylesPack.tableButton}`}
-                                            onClick={ () => {props.runToCards(pack._id)}}>open</button>
+                                            // onClick={ () => {props.runToCards(pack._id)}}
+                                    >open</button>
                                 </>
 
                             }
