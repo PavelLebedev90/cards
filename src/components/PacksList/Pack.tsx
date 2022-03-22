@@ -29,9 +29,18 @@ const Pack = ({pack, ...props}:PackPropsType) => {
                         >edit
                         </button>
                         <button className={`${stylesPack.tableButton}`}>learn</button>
+                        <button className={`${stylesPack.tableButton}`}
+                            // onClick={ () => {props.runToCards(pack._id)}}
+                        >open</button>
                     </>
                     :
-                    <button className={`${stylesPack.tableButton}`}>learn</button>
+                    <>
+                        <button className={`${stylesPack.tableButton}`}>learn</button>
+                        <button className={`${stylesPack.tableButton}`}
+                            // onClick={ () => {props.runToCards(pack._id)}}
+                        >open
+                        </button>
+                    </>
                 }
 
             </td>
