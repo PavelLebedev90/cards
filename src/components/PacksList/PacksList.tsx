@@ -10,6 +10,8 @@ import {PacksDataType, PacksFetchDataType} from '../../api/pack-api';
 import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
 import TablePacks, {ModalCRUDType} from './TablePacks/TablePacks';
+import {CardFetchDataType} from '../../api/card-api';
+import {setCardsPackId} from '../../BLL/cardsReducer';
 import {setOpenModal} from '../../BLL/appReducer';
 
 
@@ -25,6 +27,8 @@ const PacksList = () => {
     const [initialPage, setInitialPage] = useState(packs.page)
     const [currentPageCount, setCurrentPageCount] = useState(1)
     const [searchParams, setSearchParams] = useSearchParams()
+    const fetchCardsData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
+    const [navToCardsList, setNavToCardsList] = useState<boolean>(false)
     const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false)
     const [modalAddIsOpen, setModalAddIsOpen] = useState(false)
     const [packId, setPackId] = useState('')
@@ -73,6 +77,7 @@ const PacksList = () => {
     }, [packsFetchData])
 
 
+    console.log('Packs Render')
     if (!userId) {
         return (
             <Navigate to={'/login'}/>
@@ -80,14 +85,25 @@ const PacksList = () => {
     }
     const addNewPack = (packTitle:string) => {
         dispatch(changeUserPack('addPack', packTitle))
+    if (navToCardsList) {
+        return (
+            <Navigate to={'/cards-list'}/>
+        )
     }
+    }
+
     const changePackName = (id: string) => {
         dispatch(changeUserPack('changePack', id))
     }
     const removePack = (id: string) => {
         dispatch(changeUserPack('deletePack', id))
     }
+    const runToCardsHandler =  (id: string) => {
+        dispatch(setCardsPackId(id))
+        setNavToCardsList(true)
+    }
     const onChange = ({selected}: { selected: number }) => {
+        console.log('onChange')
         if (kostil) {
             dispatch(setPacksFetchData({...packsFetchData, page: selected + 1}))
         } else {
@@ -124,6 +140,7 @@ const PacksList = () => {
                         packId={packId}
                         opening={opening}
                         setModalDeleteIsOpen={setModalDeleteIsOpen}
+                        runToCards={runToCardsHandler}
             />
 
             <Paginate pageCount={currentPageCount}
@@ -135,4 +152,4 @@ const PacksList = () => {
     );
 };
 
-export default PacksList;
+export default PacksList

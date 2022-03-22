@@ -123,38 +123,7 @@ export const changeUserPack = (keyApi:PackApiKeys, arg:string) => (
         }
     )
 }
-// export const changeUserPack = (packId:string) =>(
-//     dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
-// ) =>{
-//     dispatch(setFetching(true))
-//     packApi.changePack(packId)
-//         .then(() => {
-//             dispatch(setUserPacks())
-//         })
-//         .catch((e: AxiosError) => {
-//             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
-//             dispatch(setError(error))
-//         }).finally(() => {
-//             dispatch(setFetching(false))
-//         }
-//     )
-// }
-// export const deleteUserPack = (packId:string) =>(
-//     dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
-// ) =>{
-//     dispatch(setFetching(true))
-//     packApi.deletePack(packId)
-//         .then(() => {
-//             dispatch(setUserPacks())
-//         })
-//         .catch((e: AxiosError) => {
-//             const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
-//             dispatch(setError(error))
-//         }).finally(() => {
-//             dispatch(setFetching(false))
-//         }
-//     )
-// }
+
 
 type InitialPacksStateType = {
     packs: PacksDataType
