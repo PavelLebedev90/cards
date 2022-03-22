@@ -6,7 +6,7 @@ import {RootStateType} from "../../BLL/store";
 import stylesLogin from "../Login/Login.module.css";
 import {CardFetchDataType, CardType} from "../../api/card-api";
 import {Navigate} from "react-router-dom";
-// import {addCard, deleteCard, getUserCards} from "../../BLL/cardsReducer";
+import {addCard, deleteCard, getUserCards} from "../../BLL/cardsReducer";
 import ActionBlock from "./ActionBlock/ActionBlock";
 
 const CardsList = () => {
@@ -17,15 +17,15 @@ const CardsList = () => {
     //const errorMessage = useSelector<RootStateType, string>(state => state.cards.error)
     const isAnotherUser = useSelector<RootStateType, boolean>(state => state.cards.anotherUser)
     const cardsFetchData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
-    // const onClickHandler = () => {
-    //     dispatch(addCard())
-    // }
-    // const deleteCardHandler = (id: string) => {
-    //     dispatch(deleteCard(id))
-    // }
-    // useEffect(() => {
-    //     dispatch(getUserCards())
-    // }, [cardsFetchData, dispatch])
+    const onClickHandler = () => {
+        dispatch(addCard())
+    }
+    const deleteCardHandler = (id: string) => {
+        dispatch(deleteCard(id))
+    }
+    useEffect(() => {
+        dispatch(getUserCards())
+    }, [cardsFetchData, dispatch])
 
     if (!userId) {
         return (
@@ -42,7 +42,7 @@ const CardsList = () => {
 
                 <div className={stylesCardsList.buttonsBlock}>
                     <button
-                        // onClick={onClickHandler}
+                        onClick={onClickHandler}
                         disabled={isLoading || isAnotherUser}
                         className={stylesLogin.button}
                     >Add new card
@@ -79,7 +79,7 @@ const CardsList = () => {
                                     isAnotherUser={isAnotherUser}
                                     isLoading={isLoading}
                                     idCard={card._id}
-                                    // deleteCardHandler={deleteCardHandler}
+                                    deleteCardHandler={deleteCardHandler}
                                 />
                             </td>
                         </tr>
