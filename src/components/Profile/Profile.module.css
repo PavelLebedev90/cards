@@ -1,121 +1,75 @@
-.personalInformation {
-    font-weight: bold;
-    color: darkblue;
-}
-
 .mainBlock {
-    background-color: white;
-    width: 400px;
-    min-height: 500px;
-    border-radius: 8px;
-    margin: 15px auto;
-    display: flex;
-    position: absolute;
-    top: 54%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    flex-direction: column;
-    align-items: center;
     font-family: 'Poppins', sans-serif;
-    padding: 5px 10px;
 }
 
-h1 {
-    margin-top: 25px;
-    margin-bottom: 0;
-    font-size: 26px;
-    font-weight: 600;
-    line-height: 39px;
+.profileContainer {
+    width: 500px;
+    height: 500px;
+    border: 1px solid black;
+    margin: 50px auto 0px;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.personalInformation {
     font-style: normal;
 }
 
-.imageBlock {
-    border-radius: 7px;
-    margin: 16px 0 0 0;
+.blockForm {
+    width: 450px;
+    height: 250px;
 }
 
-.imgAddAvatar {
-    cursor: pointer;
-    position: absolute;
-    top: 42%;
-    transform: translateY(-50%);
-    right: 30%;
-    background: white;
-    border-radius: 50px;
-}
-
-.imgAddAvatar:hover {
-    background-color: cornflowerblue;
-}
-
-.imgAddAvatar:active {
-    background-color: white;
-}
-
-.inputsBlock {
+.inputs {
+    height: 120px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    margin: 39px 0 0 0;
-
+    justify-content: space-around;
 }
 
-.inputsBlock input {
-    resize: both;
-    margin-bottom: 30px;
+.input {
     height: 40px;
-    width: 280px;
     border-top: none;
     border-right: none;
     border-left: none;
     outline: none;
-    font-size: 20px;
-    padding: 5px;
-    background-color: white;
-    -webkit-box-shadow: inset 0 0 0 50px #fff;
-    -webkit-text-fill-color: #000;
-
+    font-size: 19px;
 }
 
-.inputsBlock input:-webkit-autofill {
-    font-size: inherit;
-}
-
-.inputsBlock input:focus {
-    border-color: #7051ff;
-}
-
-.buttonsBlock {
-    width: 300px;
+.buttons {
     display: flex;
     justify-content: space-between;
-    margin: 30px 0 15px 0;
+    margin-top: 70px;
 }
 
-.buttonsBlockPosition {
-
-}
-
-button {
+.button {
     width: 100px;
     height: 30px;
     border-radius: 80px;
     text-decoration: none;
     border: none;
-    margin: 15px 5px 0;
-    transition: 0.3s;
-    font-size: 20px;
-    color: white;
-    background-color: darkblue;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
 }
 
 .button:hover {
     opacity: 0.5;
 }
-.button:disabled{
-    opacity: 0.2;
-}
+
 .button:active {
     color: black;
     background-color: #f0f1f3;
+}
+
+.saveButton {
+    color: white;
+    background-color: darkblue;
+}
+
+.cancelButton {
+    color: white;
+    background-color: #98a7c5;
 }
