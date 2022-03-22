@@ -10,7 +10,6 @@ const initialState = {
     isLoggedIn: false
 }
 
-
 export const profileReducer = (state: ProfileInitialStateType = initialState, action: AllProfileActionsCreatorsType): ProfileInitialStateType => {
     switch (action.type) {
         case "PROFILE/SET_USER":
