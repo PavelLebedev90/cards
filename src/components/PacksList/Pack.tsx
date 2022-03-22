@@ -7,6 +7,7 @@ type PackPropsType = {
     pack: PackType
     userId:string
     opening: (modal: ModalCRUDType, packId?: string)=>void
+    runToCards: (id: string) => void
 }
 const Pack = ({pack, ...props}:PackPropsType) => {
     return (
@@ -29,9 +30,18 @@ const Pack = ({pack, ...props}:PackPropsType) => {
                         >edit
                         </button>
                         <button className={`${stylesPack.tableButton}`}>learn</button>
+                        <button className={`${stylesPack.tableButton}`}
+                            onClick={ () => {props.runToCards(pack._id)}}
+                        >open</button>
                     </>
                     :
-                    <button className={`${stylesPack.tableButton}`}>learn</button>
+                    <>
+                        <button className={`${stylesPack.tableButton}`}>learn</button>
+                        <button className={`${stylesPack.tableButton}`}
+                            onClick={ () => {props.runToCards(pack._id)}}
+                        >open
+                        </button>
+                    </>
                 }
 
             </td>

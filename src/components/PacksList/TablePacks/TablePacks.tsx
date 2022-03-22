@@ -23,6 +23,7 @@ type TablePacksType = {
     runToCards: (id: string) => void
 }
 export type ModalCRUDType = 'delete' | 'add' | 'change'
+
 const TablePacks = (props: TablePacksType) => {
     const imageSortArrow = props.sortPacks === '1cardsCount' ? downArrow : upArrow
     const tableIsFetchingClass = props.isFetching ? stylesPack.tableFetching : ''
@@ -68,38 +69,8 @@ const TablePacks = (props: TablePacksType) => {
                               pack={pack}
                               userId={props.userId}
                               opening={props.opening}
+                              runToCards={props.runToCards}
                         />
-                        <td className={stylesPack.colName}>{pack.name}</td>
-                        <td>{pack.cardsCount}</td>
-                        <td>{new Date(pack.created).toLocaleDateString()}</td>
-                        <td>{pack.user_name}</td>
-                        <td>
-                            {props.userId === pack._id
-                                ?
-                                <>
-                                    <button
-                                        className={`${stylesPack.tableButton} ${stylesPack.deleteTableButton}`}
-                                        onClick={()=>props.removePack(pack._id)}
-                                    >delete
-                                    </button>
-                                    <button className={`${stylesPack.tableButton}`}
-                                            onClick={()=>props.changePackName(pack._id)}
-                                    >edit
-                                    </button>
-                                    <button className={`${stylesPack.tableButton}`}>learn</button>
-                                    <button className={`${stylesPack.tableButton}`}
-                                            onClick={ () => {props.runToCards(pack._id)}}>open</button>
-                                </>
-                                :
-                                <>
-                                    <button className={`${stylesPack.tableButton}`}>learn</button>
-                                    <button className={`${stylesPack.tableButton}`}
-                                            onClick={ () => {props.runToCards(pack._id)}}>open</button>
-                                </>
-
-                            }
-
-                        </td>
                     </tr>
                 })
                 :
