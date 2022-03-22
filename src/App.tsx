@@ -15,6 +15,7 @@ import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import SetNewPassword from './SetNewPassword/SetNewPassword';
 import PacksList from './components/PacksList/PacksList';
 import stylesPack from './components/PacksList/PacksList.module.css';
+import CardsList from './components/CardList/CardsList';
 
 
 function App() {
@@ -50,6 +51,7 @@ function App() {
                 <Route path={'/forgot'} element={<ForgotPassword/>}/>
                 <Route path={'/set-new-password/:token'} element={<SetNewPassword/>}/>
                 <Route path={`/packs-list`} element={<PacksList/>}/>
+                <Route path={'/cards-list'} element={<CardsList/>}/>
             </Routes>
         </div>
     );
