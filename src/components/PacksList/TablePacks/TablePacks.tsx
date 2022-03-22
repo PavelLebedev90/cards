@@ -20,9 +20,10 @@ type TablePacksType = {
     setModalDeleteIsOpen: (value:boolean)=>void
     removePack: (id:string)=>void
     changePackName: (id:string) =>void
-    // runToCards: (id: string) => void
+    runToCards: (id: string) => void
 }
 export type ModalCRUDType = 'delete' | 'add' | 'change'
+
 const TablePacks = (props: TablePacksType) => {
     const imageSortArrow = props.sortPacks === '1cardsCount' ? downArrow : upArrow
     const tableIsFetchingClass = props.isFetching ? stylesPack.tableFetching : ''
@@ -68,6 +69,7 @@ const TablePacks = (props: TablePacksType) => {
                               pack={pack}
                               userId={props.userId}
                               opening={props.opening}
+                              runToCards={props.runToCards}
                         />
                     </tr>
                 })
