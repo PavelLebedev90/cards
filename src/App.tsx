@@ -52,6 +52,7 @@ function App() {
                 <Route path={'/set-new-password/:token'} element={<SetNewPassword/>}/>
                 <Route path={`/packs-list`} element={<PacksList/>}/>
                 <Route path={'/cards-list'} element={<CardsList/>}/>
+
             </Routes>
         </div>
     );
