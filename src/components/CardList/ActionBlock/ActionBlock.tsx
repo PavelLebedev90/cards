@@ -5,17 +5,17 @@ type ActionBlockType = {
     isAnotherUser: boolean
     idCard: string
     isLoading: boolean
-    // deleteCardHandler: (id: string) => void
+    deleteCardHandler: (id: string) => void
 }
 
 const ActionBlock: React.FC<ActionBlockType> = ({
                                                     isLoading,
-                                                    // deleteCardHandler,
+                                                    deleteCardHandler,
                                                     idCard,
                                                     isAnotherUser
                                                 }) => {
     const callbackDeleteButton = () => {
-        // deleteCardHandler(idCard)
+        deleteCardHandler(idCard)
     }
     return (
         <div>
