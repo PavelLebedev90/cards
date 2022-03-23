@@ -104,7 +104,7 @@ export const setAnotherUser = (anotherUser: boolean) => {
         payload: {anotherUser}
     } as const
 }
-export const setCardsPackId = (cardsPack_id: string) => {
+export const setCardsPackId = (cardsPack_id: string | undefined = '') => {
     return {
         type: 'CARDS/SET-CARDS-PACK-ID',
         payload: {cardsPack_id}

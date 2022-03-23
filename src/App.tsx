@@ -44,7 +44,7 @@ function App() {
                 <Route path={'/forgot'} element={<ForgotPassword/>}/>
                 <Route path={'/set-new-password/:token'} element={<SetNewPassword/>}/>
                 <Route path={'/packs-list'} element={<PacksList/>}/>
-                <Route path={'/cards-list'} element={<CardsList/>}/>
+                <Route path={'/cards-list/:idCardPack'} element={<CardsList/>}/>
             </Routes>
         </div>
     );

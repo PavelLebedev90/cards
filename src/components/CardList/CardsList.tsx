@@ -4,19 +4,18 @@ import Preloader from "../../features/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
 import stylesLogin from "../Login/Login.module.css";
-import {CardFetchDataType, CardType} from "../../api/card-api";
-import {Navigate} from "react-router-dom";
-import {addCard, deleteCard, getUserCards} from "../../BLL/cardsReducer";
+import {CardType} from "../../api/card-api";
+import {Navigate, useParams} from "react-router-dom";
+import {addCard, deleteCard, getUserCards, setCardsPackId} from "../../BLL/cardsReducer";
 import ActionBlock from "./ActionBlock/ActionBlock";
 
 const CardsList = () => {
+    const {idCardPack} = useParams()
     const dispatch = useDispatch()
     const isLoading = useSelector<RootStateType, boolean>(state => state.cards.isLoading)
     const userId = useSelector<RootStateType, string>(state => state.login.user._id)
     const cards = useSelector<RootStateType, CardType[]>(state => state.cards.cards.cards)
-    //const errorMessage = useSelector<RootStateType, string>(state => state.cards.error)
     const isAnotherUser = useSelector<RootStateType, boolean>(state => state.cards.anotherUser)
-    const cardsFetchData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
     const onClickHandler = () => {
         dispatch(addCard())
     }
@@ -24,8 +23,9 @@ const CardsList = () => {
         dispatch(deleteCard(id))
     }
     useEffect(() => {
+        dispatch(setCardsPackId(idCardPack))
         dispatch(getUserCards())
-    }, [cardsFetchData, dispatch])
+    }, [dispatch, idCardPack])
 
     if (!userId) {
         return (

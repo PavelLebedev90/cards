@@ -11,7 +11,7 @@ import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
 import TablePacks from './TablePacks/TablePacks';
 import {CardFetchDataType} from "../../api/card-api";
-import {getUserCards, setCardsPackId} from "../../BLL/cardsReducer";
+import {setCardsPackId} from "../../BLL/cardsReducer";
 
 
 const PacksList = () => {
@@ -19,13 +19,13 @@ const PacksList = () => {
     const userId = useSelector<RootStateType, string>(state => state.login.user._id)
     const dispatch = useDispatch()
     const isFetching = useSelector<RootStateType, boolean>(state => state.packs.isFetching)
+    const cardsFetchData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
     const packs = useSelector<RootStateType, PacksDataType>(state => state.packs.packs)
     const packsFetchData = useSelector<RootStateType, PacksFetchDataType>(state => state.packs.packsFetchData)
     const [value, setValue] = useState<ValueNumberOfCardsType>({min: 0, max: maxCardsCount});
     const [initialPage, setInitialPage] = useState(packs.page)
     const [currentPageCount, setCurrentPageCount] = useState(1)
     const [searchParams, setSearchParams] = useSearchParams()
-    const fetchCardsData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
     const [navToCardsList, setNavToCardsList] = useState<boolean>(false)
     const pageQuery = searchParams.get('page')
     //костыль для оптимизации запроса
@@ -61,7 +61,7 @@ const PacksList = () => {
     }
     if (navToCardsList) {
         return (
-            <Navigate to={'/cards-list'}/>
+            <Navigate to={`/cards-list/${cardsFetchData.cardsPack_id}`} />
         )
     }
     const addNewPack = () => {
