@@ -122,7 +122,9 @@ export const getUserCards = () => (
     cardsApi.getCards(cardsFetchData)
         .then((res) => {
             const packUserId = res.data.packUserId
-            userId === packUserId && dispatch(setAnotherUser(false))
+             userId === packUserId
+                 ? dispatch(setAnotherUser(false))
+                 : dispatch(setAnotherUser(true))
             dispatch(setCards(res.data))
         })
         .catch((e: AxiosError) => {
