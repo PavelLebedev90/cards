@@ -1,4 +1,4 @@
-import {CardFetchDataType, cardsApi, CardsDataType, CardType} from "../api/card-api";
+import {CardFetchDataType, cardsApi, CardsDataType, CardType, UpdateCardDataType} from "../api/card-api";
 import {Dispatch} from "redux";
 import {AxiosError} from 'axios';
 import {RootStateType} from "./store";
@@ -122,9 +122,9 @@ export const getUserCards = () => (
     cardsApi.getCards(cardsFetchData)
         .then((res) => {
             const packUserId = res.data.packUserId
-             userId === packUserId
-                 ? dispatch(setAnotherUser(false))
-                 : dispatch(setAnotherUser(true))
+            userId === packUserId
+                ? dispatch(setAnotherUser(false))
+                : dispatch(setAnotherUser(true))
             dispatch(setCards(res.data))
         })
         .catch((e: AxiosError) => {
@@ -182,6 +182,29 @@ export const deleteCard = (id: string) => (
             dispatch(setFetchingCardsList(false))
         })
 }
+
+export const updateCard = (_id: string, question: string, answer: string) => (
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>,
+) => {
+    dispatch(setFetchingCardsList(true))
+    const updateCardDataType: UpdateCardDataType = {
+        _id,
+        answer,
+        question,
+    }
+    cardsApi.putCard(updateCardDataType)
+        .then(() => {
+            dispatch(getUserCards())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        })
+        .finally(() => {
+            dispatch(setFetchingCardsList(false))
+        })
+}
+
 
 //types
 type ActionsCardsType =

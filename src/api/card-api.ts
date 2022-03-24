@@ -17,6 +17,9 @@ export const cardsApi = {
     },
     deleteCard(idCard: string) {
         return instanceCard.delete(`/cards/card?id=${idCard}`)
+    },
+    putCard(updateCardData: UpdateCardDataType) {
+        return instanceCard.put<CardsDataType>(`/cards/card`, {card: updateCardData} )
     }
 }
 
@@ -63,4 +66,10 @@ export type CardsDataType =  {
     page: number
     pageCount: number
     packUserId: string
+}
+
+export type UpdateCardDataType = {
+    _id: string
+    question: string
+    answer: string
 }
