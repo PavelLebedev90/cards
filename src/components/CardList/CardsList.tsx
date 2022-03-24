@@ -68,6 +68,32 @@ const CardsList = () => {
         }
         dispatch(getUserCards())
     }
+    const [id, setId] = useState(0)
+    const [cardAnswer, setCardAnswer] = useState(cardsFetchData.cardAnswer)
+    const [cardQuestion, setCardQuestion] = useState(cardsFetchData.cardQuestion)
+    const filterByAnswerTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.currentTarget.value
+        setCardAnswer(value)
+        const newCardsFetchData = {...cardsFetchData, cardAnswer: value}
+        clearTimeout(id)
+        setId(0)
+        let ident = setTimeout(() => {
+            dispatch(setCardsFetchData(newCardsFetchData))
+        }, 1500)
+        setId(+ident)
+    }
+    const filterByQuestionTitle = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = e.currentTarget.value
+        setCardQuestion(value)
+        const newCardsFetchData = {...cardsFetchData, cardQuestion: value}
+        clearTimeout(id)
+        setId(0)
+        let ident = setTimeout(() => {
+            dispatch(setCardsFetchData(newCardsFetchData))
+            dispatch(getUserCards())
+        }, 1500)
+        setId(+ident)
+    }
     useEffect(() => {
         dispatch(setCardsPackId(idCardPack))
         dispatch(getUserCards())
@@ -84,6 +110,22 @@ const CardsList = () => {
             <h1 className={stylesCardsList.header}>
                 Cards list
             </h1>
+            <div className={stylesCardsList.searchBlock}>
+                <div className={stylesCardsList.inputsBlock}>
+                    <input type="text"
+                           placeholder="Search question..."
+                           value={cardQuestion}
+                           onChange={filterByQuestionTitle}
+                    />
+                </div>
+                <div className={stylesCardsList.inputsBlock}>
+                    <input type="text"
+                           placeholder="Search answer..."
+                           value={cardAnswer}
+                           onChange={filterByAnswerTitle}
+                    />
+                </div>
+            </div>
             <div className={stylesCardsList.formPacks}>
 
                 <div className={stylesCardsList.buttonsBlock}>
