@@ -11,24 +11,24 @@ export const instancePack = axios.create({
 })
 
 export const packApi = {
-    getPacks(packsFetchData: PacksFetchDataType = {} as PacksFetchDataType){
+    getPacks: function (packsFetchData: PacksFetchDataType = {} as PacksFetchDataType){
         return instancePack.get<PacksDataType>(`/cards/pack`,{params: packsFetchData})
     },
-    addPack(){
-        return instancePack.post('/cards/pack', {cardsPack: {name: "my Pack"}})
+    addPack: function (name:string){
+        return instancePack.post('/cards/pack', {cardsPack: {name: name}})
     },
-    changePack(packId:string){
+    changePack: function (packId:string){
         return instancePack.put('/cards/pack',
             {cardsPack: {
                 _id: packId,
                     name: "my NEW Pack"
                 }})
     },
-    deletePack(packId:string){
+    deletePack: function (packId:string){
         return instancePack.delete(`/cards/pack?id=${packId}`)
     }
 }
-
+export type PackApiKeys = 'addPack' | 'changePack' | 'deletePack'
 export type PackType = {
     _id: string
     user_id: string

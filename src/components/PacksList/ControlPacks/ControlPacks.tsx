@@ -6,13 +6,20 @@ import {setPacksFetchData} from '../../../BLL/packsReducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootStateType} from '../../../BLL/store';
 import {PacksFetchDataType} from '../../../api/pack-api';
+import Modal from '../../../features/Modal/Modal';
+import ModalAddPack from '../../../features/Modal/ModalAddPack/ModalAddPack';
+import {ModalCRUDType} from '../TablePacks/TablePacks';
 
 type ControlPacksType = {
     isFetching: boolean
     maxCardsCount: number
     value: ValueNumberOfCardsType
     setValue: (value: ValueNumberOfCardsType) => void
-    addNewPack: () => void
+    addNewPack: (packTitle:string) => void
+    closing: (modal: ModalCRUDType)=>void
+    modalAddIsOpen:boolean
+    opening: (modal: ModalCRUDType, packId?: string)=>void
+    setModalAddIsOpen: (value:boolean) =>void
 }
 
 const ControlPacks = (props: ControlPacksType) => {
@@ -42,7 +49,9 @@ const ControlPacks = (props: ControlPacksType) => {
         }, 1500)
         setId(+ident)
     }
-
+    const addNewPackHandler = (title:string) => {
+        props.addNewPack(title)
+    }
     const filterByPackName = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value
         setValueName(value)
@@ -58,6 +67,18 @@ const ControlPacks = (props: ControlPacksType) => {
 
     return (
         <>
+            <Modal closing={props.closing}
+                   modalIsOpen={props.modalAddIsOpen}
+                   height={250}
+                   width={350}
+                   modalAction={'add'}
+                   setModalIsOpen={props.setModalAddIsOpen}
+            >
+                <ModalAddPack closing={props.closing}
+                              addPack={addNewPackHandler}
+                              isFetching={props.isFetching}
+                />
+            </Modal>
             <div className={`${stylesPack.formPacks} ${stylesPack.BGFormPacks}`}>
                 <div className={`${stylesLogin.buttonsBlock} ${stylesPack.filterPacks}`}>
                     Show packs cards: <br/>
@@ -98,12 +119,11 @@ const ControlPacks = (props: ControlPacksType) => {
 
                 <div className={stylesLogin.buttonsBlock}>
                     <button
-                        onClick={props.addNewPack}
+                        onClick={()=>props.opening('add')}
                         disabled={props.isFetching}
                         className={stylesLogin.button}
                     >Add new pack
                     </button>
-                    {/*}*/}
                 </div>
             </div>
         </>

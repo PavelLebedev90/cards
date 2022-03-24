@@ -6,6 +6,7 @@ import {Dispatch} from 'redux';
 const initialState = {
     isLoggedIn: false,
     isInitialization: false,
+    isOpenModal:false,
     error: null as null | string
 }
 
@@ -14,6 +15,7 @@ export const appReducer = (state = initialState, action: ActionAppType) => {
         case 'APP/INITIALIZATION':
         case 'APP/LOGED-IN':
         case 'APP/ERROR':
+        case 'APP/IS-OPEN-MODAL':
             return {
                 ...state,
                 ...action.payload
@@ -28,6 +30,14 @@ export const setloggedIn = (isLoggedIn:boolean)=>{
         type: 'APP/LOGED-IN',
         payload:{
             isLoggedIn
+        }
+    } as const
+}
+export const setOpenModal = (isOpenModal:boolean)=>{
+    return {
+        type: 'APP/IS-OPEN-MODAL',
+        payload:{
+            isOpenModal
         }
     } as const
 }
@@ -74,3 +84,4 @@ export type ActionAppType =
 | SetInitializationType
 | ReturnType<typeof setError>
 | SetUserDataType
+| ReturnType<typeof setOpenModal>

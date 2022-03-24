@@ -1,0 +1,51 @@
+.header{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px 0 25px 32px;
+}
+.addTableButton{
+    width: 120px;
+    height: 35px;
+    margin-top: 53px;
+    font-size: 20px;
+    border-radius: 20px;
+    text-decoration: none;
+    border: none;
+    transition: 0.3s;
+    color: darkblue;
+    font-weight: normal;
+    background-color: #D7D8EF;
+    cursor: pointer;
+}
+.addTableButton:hover {
+    background-color: darkblue;
+    color: white;
+}
+.addTableButton:active {
+    color: black;
+    background-color: #f0f1f3;
+}
+.error{
+    color: #f80a00;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+}
+.buttonCancel{
+
+}
+.buttonSave{
+    color: white;
+    background-color: darkblue;
+    transition: 0.3s;
+}
+.buttonSave:disabled{
+    opacity: 0.2;
+}
+.buttonSave:hover{
+    background-color: rgba(0, 0, 139, 0.58);
+}
+.buttonSave:active {
+    color: black;
+    background-color: #f0f1f3;
+}

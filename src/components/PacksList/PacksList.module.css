@@ -96,6 +96,7 @@
     color: darkblue;
     font-weight: bolder;
     background-color: #D7D8EF;
+    cursor: pointer;
 }
 
 .tableButton:hover {
