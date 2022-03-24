@@ -137,7 +137,7 @@ export const getUserCards = () => (
         )
 }
 
-export const addCard = () => (
+export const addNewCard = () => (
     dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>,
     getState: () => RootStateType
 ) => {

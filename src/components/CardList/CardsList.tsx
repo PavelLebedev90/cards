@@ -4,10 +4,13 @@ import Preloader from "../../features/Preloader/Preloader";
 import {useDispatch, useSelector} from "react-redux";
 import {RootStateType} from "../../BLL/store";
 import stylesLogin from "../Login/Login.module.css";
-import {CardType} from "../../api/card-api";
+import {CardFetchDataType, CardType} from "../../api/card-api";
 import {Navigate, useParams} from "react-router-dom";
-import {addCard, deleteCard, getUserCards, setCardsPackId, updateCard} from "../../BLL/cardsReducer";
+import {addNewCard, deleteCard, getUserCards, setCardsFetchData, setCardsPackId, updateCard} from "../../BLL/cardsReducer";
 import ActionBlock from "./ActionBlock/ActionBlock";
+import downArrow from "../../logo/arrows/downArrow.svg";
+import upArrow from "../../logo/arrows/upArrow.svg";
+
 
 const CardsList = () => {
     const {idCardPack} = useParams()
@@ -15,12 +18,12 @@ const CardsList = () => {
     const isLoading = useSelector<RootStateType, boolean>(state => state.cards.isLoading)
     const userId = useSelector<RootStateType, string>(state => state.login.user._id)
     const cards = useSelector<RootStateType, CardType[]>(state => state.cards.cards.cards)
+    const cardsFetchData = useSelector<RootStateType, CardFetchDataType>(state => state.cards.cardsFetchData)
     const isAnotherUser = useSelector<RootStateType, boolean>(state => state.cards.anotherUser)
     const [isUpdateInput, setIsUpdateInput] = useState<boolean>(false)
     const [currentIdUpdateCard, setCurrentIdUpdateCard] = useState<string>('')
     const [answerData, setAnswerData] = useState<string>('')
     const [questionData, setQuestionData] = useState<string>('')
-
     const setUpdateCardHandler = (id: string) => {
         dispatch(updateCard(id, questionData, answerData))
         setIsUpdateInput(false)
@@ -36,7 +39,7 @@ const CardsList = () => {
         setIsUpdateInput(true)
     }
     const addNewCardHandler = () => {
-        dispatch(addCard())
+        dispatch(addNewCard())
     }
     const deleteCardHandler = (id: string) => {
         dispatch(deleteCard(id))
@@ -46,6 +49,17 @@ const CardsList = () => {
     }
     const updateQuestionHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setQuestionData(e.currentTarget.value)
+    }
+    const imageSortArrow = cardsFetchData.sortCards === '1grade' ? downArrow : upArrow
+    const setSortArrow = () => {
+        const up = '0grade'
+        const down = '1grade'
+        if (cardsFetchData.sortCards === down) {
+            dispatch(setCardsFetchData({...cardsFetchData, sortCards: up}))
+        } else {
+            dispatch(setCardsFetchData({...cardsFetchData, sortCards: down}))
+        }
+        dispatch(getUserCards())
     }
     useEffect(() => {
         dispatch(setCardsPackId(idCardPack))
@@ -83,7 +97,16 @@ const CardsList = () => {
             <table className={stylesCardsList.table}>
                 <thead>
                 <tr>
-                    <th>Question</th>
+                    <th>
+                        <div className={stylesCardsList.lastUpdatedBlock}>
+                            Question
+                            <img className={stylesCardsList.sortLogo}
+                                 src={imageSortArrow}
+                                 alt={'sort arrow'}
+                                 onClick={setSortArrow}
+                            />
+                        </div>
+                    </th>
                     <th>Answer</th>
                     <th>Last updated</th>
                     <th>Grade</th>
@@ -132,8 +155,6 @@ const CardsList = () => {
                         <td colSpan={5}>Nothing found for your request</td>
                     </tr>
                 }
-
-
                 </tbody>
             </table>
         </div>
