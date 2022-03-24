@@ -29,6 +29,10 @@ const CardsList = () => {
     }
     const toggleInputHandler = (id: string) => {
         setCurrentIdUpdateCard(id)
+        const initialAnswer = cards.filter(i => i._id === id)[0].answer
+        const initialQuestion = cards.filter(i => i._id === id)[0].question
+        setAnswerData(initialAnswer === 'no answer' ? '' : initialAnswer)
+        setQuestionData(initialQuestion === 'no question' ? '' : initialAnswer)
         setIsUpdateInput(true)
     }
     const addNewCardHandler = () => {
