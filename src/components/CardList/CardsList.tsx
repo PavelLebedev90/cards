@@ -6,7 +6,14 @@ import {RootStateType} from "../../BLL/store";
 import stylesLogin from "../Login/Login.module.css";
 import {CardFetchDataType, CardType} from "../../api/card-api";
 import {Navigate, useParams} from "react-router-dom";
-import {addNewCard, deleteCard, getUserCards, setCardsFetchData, setCardsPackId, updateCard} from "../../BLL/cardsReducer";
+import {
+    addNewCard,
+    deleteCard,
+    getUserCards,
+    setCardsFetchData,
+    setCardsPackId,
+    updateCard
+} from "../../BLL/cardsReducer";
 import ActionBlock from "./ActionBlock/ActionBlock";
 import downArrow from "../../logo/arrows/downArrow.svg";
 import upArrow from "../../logo/arrows/upArrow.svg";
@@ -97,9 +104,11 @@ const CardsList = () => {
             <table className={stylesCardsList.table}>
                 <thead>
                 <tr>
+                    <th>Question</th>
+                    <th>Answer</th>
                     <th>
                         <div className={stylesCardsList.lastUpdatedBlock}>
-                            Question
+                            Last updated
                             <img className={stylesCardsList.sortLogo}
                                  src={imageSortArrow}
                                  alt={'sort arrow'}
@@ -107,8 +116,6 @@ const CardsList = () => {
                             />
                         </div>
                     </th>
-                    <th>Answer</th>
-                    <th>Last updated</th>
                     <th>Grade</th>
                     <th>Actions</th>
                 </tr>
