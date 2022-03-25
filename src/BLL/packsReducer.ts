@@ -107,11 +107,11 @@ export const setUserPacks = () => (
         }
     )
 }
-export const changeUserPack = (keyApi:PackApiKeys, arg:string) => (
+export const changeUserPack = (keyApi:PackApiKeys, arg:string, newPackName:string = '') => (
     dispatch: ThunkDispatch<RootStateType, unknown, ActionPacksType>
 ) => {
     dispatch(setFetching(true))
-    packApi[keyApi](arg)
+    packApi[keyApi](arg, newPackName)
         .then(() => {
             dispatch(setUserPacks())
         })

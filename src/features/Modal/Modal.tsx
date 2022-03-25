@@ -21,11 +21,7 @@ const Modal = ({closing, modalIsOpen, width, height, ...props}: ModalType) => {
     const dispatch = useDispatch()
 
     function onRequestClose(modalAction: ModalCRUDType) {
-        if (modalAction === 'delete') {
-            closing('delete')
-        } else if (modalAction === 'add') {
-            closing('add')
-        }
+        closing(modalAction)
     }
 
     function close() {

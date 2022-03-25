@@ -1,8 +1,8 @@
-import {CardFetchDataType, cardsApi, CardsDataType, CardType} from "../api/card-api";
-import {Dispatch} from "redux";
+import {CardFetchDataType, cardsApi, CardsDataType, CardType, GradeCardType, UpdatedGradeType} from '../api/card-api';
+import {Dispatch} from 'redux';
 import {AxiosError} from 'axios';
-import {RootStateType} from "./store";
-import {ThunkDispatch} from "redux-thunk";
+import {RootStateType} from './store';
+import {ThunkDispatch} from 'redux-thunk';
 
 const initialState: InitialStateType = {
     cards: {
@@ -31,7 +31,7 @@ const initialState: InitialStateType = {
 
 export const cardsReducer = (state = initialState, action: ActionsCardsType): InitialStateType => {
     switch (action.type) {
-        case "CARDS/SET-CARDS":
+        case 'CARDS/SET-CARDS':
             return {
                 ...state,
                 cards: {
@@ -39,7 +39,7 @@ export const cardsReducer = (state = initialState, action: ActionsCardsType): In
                     ...action.payload.cards
                 }
             }
-        case "CARDS/SET-CARDS-FETCH-DATA":
+        case 'CARDS/SET-CARDS-FETCH-DATA':
             return {
                 ...state,
                 cardsFetchData: {
@@ -47,25 +47,34 @@ export const cardsReducer = (state = initialState, action: ActionsCardsType): In
                     ...action.payload.cardsFetchData
                 }
             }
-        case "CARDS/SET-ERROR":
+        case 'CARDS/SET-ERROR':
             return {
                 ...state,
                 ...action.payload
             }
-        case "CARDS/SET-FETCH":
+        case 'CARDS/SET-FETCH':
             return {
                 ...state,
                 ...action.payload
             }
-        case "CARDS/SET-ANOTHER-USER":
+        case 'CARDS/SET-ANOTHER-USER':
             return {
                 ...state,
                 ...action.payload
             }
-        case "CARDS/SET-CARDS-PACK-ID":
+        case 'CARDS/SET-CARDS-PACK-ID':
             return {
                 ...state,
                 cardsFetchData: {...state.cardsFetchData, cardsPack_id: action.payload.cardsPack_id}
+            }
+        case 'CARDS/SET-GRADE-CARD':
+            return {
+                ...state,
+                cards: {
+                    ...state.cards,
+                    cards: state.cards.cards.map(card=> card._id === action.payload.card._id
+                        ? {...card, grade: action.payload.card.grade}:card)
+                }
             }
         default:
             return state
@@ -110,7 +119,14 @@ export const setCardsPackId = (cardsPack_id: string) => {
         payload: {cardsPack_id}
     } as const
 }
-
+export const setGradeCard = (card: UpdatedGradeType) => {
+    return {
+        type: 'CARDS/SET-GRADE-CARD',
+        payload: {
+            card
+        }
+    } as const
+}
 //thunks
 
 export const getUserCards = () => (
@@ -135,7 +151,7 @@ export const getUserCards = () => (
         )
 }
 
-export const addCard = () => (
+export const addCard = (question: string, answer: string) => (
     dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>,
     getState: () => RootStateType
 ) => {
@@ -143,8 +159,8 @@ export const addCard = () => (
     const cardsPackId = getState().cards.cardsFetchData.cardsPack_id
     const cardsPackData = {
         cardsPack_id: cardsPackId,
-        question: 'no question',
-        answer: 'no answer',
+        question: question,
+        answer: answer,
         grade: 0,
         shots: 0,
         answerImg: '',
@@ -165,6 +181,41 @@ export const addCard = () => (
         })
 }
 
+export const setGradeInTheSelectedCard = (card: GradeCardType) => (
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>,
+) => {
+    dispatch(setFetchingCardsList(true))
+    cardsApi.changeGrade(card)
+        .then((res) => {
+            dispatch(setGradeCard(res.data))
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        })
+        .finally(() => {
+            dispatch(setFetchingCardsList(false))
+        })
+}
+
+export const changeCard = (
+    card: CardType
+) => (
+    dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>
+) => {
+    dispatch(setFetchingCardsList(true))
+    cardsApi.changeCard(card)
+        .then(() => {
+            dispatch(getUserCards())
+        })
+        .catch((e: AxiosError) => {
+            const error = e.response ? e.response.data.error : (e.message + ', more details in the console');
+            dispatch(setError(error))
+        })
+        .finally(() => {
+            dispatch(setFetchingCardsList(false))
+        })
+}
 export const deleteCard = (id: string) => (
     dispatch: ThunkDispatch<RootStateType, unknown, ActionsCardsType>) => {
     dispatch(setFetchingCardsList(true))
@@ -189,6 +240,7 @@ type ActionsCardsType =
     | ReturnType<typeof setFetchingCardsList>
     | ReturnType<typeof setAnotherUser>
     | ReturnType<typeof setCardsPackId>
+    | ReturnType<typeof setGradeCard>
 
 
 export type InitialStateType = {

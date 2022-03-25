@@ -3,6 +3,9 @@ html {
     background-color: rgba(218, 225, 255, 0.98);
     box-sizing: border-box;
 }
+.active{
+    background-color: #fd2e2e
+}
 .filterBody{
     filter: blur(4px);
 }

@@ -15,11 +15,32 @@ export const cardsApi = {
     postNewCard(newCardData: NewCardDataType) {
         return instanceCard.post<CardsDataType>(`/cards/card`, {card: newCardData})
     },
+    changeCard(card:CardType){
+        return instanceCard.put('/cards/card', {card:card})
+    },
+    changeGrade(card:GradeCardType){
+        return instanceCard.put<UpdatedGradeType>('/cards/grade', card)
+    },
     deleteCard(idCard: string) {
         return instanceCard.delete(`/cards/card?id=${idCard}`)
     }
 }
 
+
+export type UpdatedGradeType = {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: number
+    shots: number
+}
+
+
+export type GradeCardType = {
+    grade: number
+    card_id: string
+}
 export type NewCardDataType = {
     cardsPack_id: string
     question: string // если не отправить будет таким
@@ -48,10 +69,10 @@ export type CardType = {
     question: string
     cardsPack_id: string
     grade: number
-    shots: number
+    shots?: number
     user_id: string
     created: Date
-    updated: Date
+    updated?: Date
     _id: string
 }
 

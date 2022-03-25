@@ -17,11 +17,11 @@ export const packApi = {
     addPack: function (name:string){
         return instancePack.post('/cards/pack', {cardsPack: {name: name}})
     },
-    changePack: function (packId:string){
+    changePack: function (packId:string, newName:string){
         return instancePack.put('/cards/pack',
             {cardsPack: {
                 _id: packId,
-                    name: "my NEW Pack"
+                    name: newName
                 }})
     },
     deletePack: function (packId:string){

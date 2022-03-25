@@ -6,6 +6,7 @@ import {PacksDataType} from '../../../api/pack-api';
 import Modal from '../../../features/Modal/Modal';
 import ModalDeletePack from '../../../features/Modal/ModalDeletePack/ModalDeletePack';
 import Pack from '../Pack';
+import ModalChangePack from '../../../features/Modal/ModalChangePack/ModalChangePack';
 
 type TablePacksType = {
     setSortArrow: () => void
@@ -13,16 +14,18 @@ type TablePacksType = {
     sortPacks: string
     userId: string
     packs: PacksDataType
-    closing: (modal: ModalCRUDType)=>void
-    modalDeleteIsOpen:boolean
-    packId:string
-    opening:(modal: ModalCRUDType, packId?: string)=>void
-    setModalDeleteIsOpen: (value:boolean)=>void
-    removePack: (id:string)=>void
-    changePackName: (id:string) =>void
+    closing: (modal: ModalCRUDType) => void
+    modalDeleteIsOpen: boolean
+    packId: string
+    opening: (modal: ModalCRUDType, packId?: string) => void
+    setModalDeleteIsOpen: (value: boolean) => void
+    modalChangeIsOpen: boolean
+    setModalChangeIsOpen: (value: boolean) => void
+    removePack: (id: string) => void
+    changePackName: (id: string, newPackName: string) => void
     runToCards: (id: string) => void
 }
-export type ModalCRUDType = 'delete' | 'add' | 'change'
+export type ModalCRUDType = 'delete' | 'add' | 'change' | 'addNewCard' | 'deleteCard' | 'changeCard' | 'learnPage'
 
 const TablePacks = (props: TablePacksType) => {
     const imageSortArrow = props.sortPacks === '1cardsCount' ? downArrow : upArrow
@@ -50,23 +53,41 @@ const TablePacks = (props: TablePacksType) => {
             {props.packs.cardPacks.length ?
                 props.packs.cardPacks.map((pack) => {
                     return <tr key={pack._id}>
-                        {pack._id === props.packId
-                        && <Modal closing={props.closing}
-                                  modalIsOpen={props.modalDeleteIsOpen}
-                                  height={250}
-                                  width={350}
-                                  modalAction={'delete'}
-                                  setModalIsOpen={props.setModalDeleteIsOpen}
-                        >
-                            <ModalDeletePack packName={pack.name}
-                                             closing={props.closing}
-                                             removePack={props.removePack}
-                                             packId={props.packId}
-                                             isFetching={props.isFetching}
-                            />
-                        </Modal>}
-                        <Pack key={pack._id}
-                              pack={pack}
+                        {(pack._id === props.packId
+                        && props.modalDeleteIsOpen &&
+                            <Modal closing={props.closing}
+                                   modalIsOpen={props.modalDeleteIsOpen}
+                                   height={250}
+                                   width={350}
+                                   modalAction={'delete'}
+                                   setModalIsOpen={props.setModalDeleteIsOpen}
+                            >
+                                <ModalDeletePack packName={pack.name}
+                                                 closing={props.closing}
+                                                 removePack={props.removePack}
+                                                 packId={props.packId}
+                                                 isFetching={props.isFetching}
+                                />
+                            </Modal>)
+                            ||
+                           ( pack._id === props.packId
+                               && props.modalChangeIsOpen &&
+                               <Modal closing={props.closing}
+                                   modalIsOpen={props.modalChangeIsOpen}
+                                   height={250}
+                                   width={350}
+                                   modalAction={'change'}
+                                   setModalIsOpen={props.setModalChangeIsOpen}
+                            >
+                                <ModalChangePack
+                                    packId={pack._id}
+                                    closing={props.closing}
+                                    changePackName={props.changePackName}
+                                    packName={pack.name}
+                                    isFetching={props.isFetching}/>
+                            </Modal>)
+                        }
+                        <Pack pack={pack}
                               userId={props.userId}
                               opening={props.opening}
                               runToCards={props.runToCards}

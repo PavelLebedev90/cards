@@ -1,26 +1,32 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import stylesModuleAdd from '../ModalAddPack/ModalAddPack.module.css';
+import stylesLogin from '../../../components/Login/Login.module.css';
 import stylesModuleDelete from '../ModalDeletePack/ModalDeletePack.module.css';
 import Preloader from '../../Preloader/Preloader';
-import stylesModuleAdd from './ModalAddPack.module.css'
 import {ModalCRUDType} from '../../../components/PacksList/TablePacks/TablePacks';
-import stylesLogin from '../../../components/Login/Login.module.css';
 
-type ModalAddPackType = {
+type ModalChangePackType = {
     closing: (modal: ModalCRUDType) => void
-    addPack: (title: string) => void
+    changePackName: (id: string, name: string) => void
     isFetching: boolean
+    packName: string
+    packId: string
 }
 
-const ModalAddPack = (props: ModalAddPackType) => {
-    const [title, setTitle] = useState('')
+const ModalChangePack = (props:ModalChangePackType) => {
+    const [title, setTitle] = useState(props.packName)
     const [error, setError] = useState('')
 
     function addPackHandler() {
+        if(title.trim() === props.packName){
+            props.closing('change')
+            return
+        }
         if (title.trim()) {
-            props.addPack(title)
-            props.closing('add')
+            props.changePackName(props.packId, title)
+            props.closing('change')
         } else {
-            setError('title is not valid')
+            setError('name is not valid')
         }
     }
 
@@ -34,12 +40,13 @@ const ModalAddPack = (props: ModalAddPackType) => {
             addPackHandler()
         }
     }
+
     return (
         <div>
-            <div className={stylesModuleAdd.header}>Edit Pack</div>
+            <div className={stylesModuleAdd.header}>Change Pack Name</div>
             <div className={stylesLogin.inputsBlock}>
                 <input type="text"
-                       placeholder={'enter pack name'}
+                       placeholder={'enter new pack name'}
                        value={title}
                        onChange={onChangeHandler}
                        onKeyPress={onKeyPressHandler}
@@ -54,7 +61,7 @@ const ModalAddPack = (props: ModalAddPackType) => {
                         :
                         <>
                             <button className={` ${stylesModuleAdd.addTableButton} ${stylesModuleAdd.buttonCancel}`}
-                                    onClick={() => props.closing('add')}
+                                    onClick={() => props.closing('change')}
                             >Cancel
                             </button>
                             <button className={` ${stylesModuleAdd.addTableButton} ${stylesModuleAdd.buttonSave}`}
@@ -70,4 +77,4 @@ const ModalAddPack = (props: ModalAddPackType) => {
     );
 };
 
-export default ModalAddPack;
+export default ModalChangePack;

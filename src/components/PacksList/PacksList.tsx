@@ -5,13 +5,15 @@ import {Navigate, useSearchParams} from 'react-router-dom';
 import stylesPack from './PacksList.module.css'
 import stylesLogin from '../Login/Login.module.css';
 import {ValueNumberOfCardsType} from '../../features/SuperInput/SuperInput';
-import { changeUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
+import {changeUserPack, setPacksFetchData, setUserPacks} from '../../BLL/packsReducer';
 import {PacksDataType, PacksFetchDataType} from '../../api/pack-api';
 import {Paginate} from '../../features/Paginate/Paginate';
 import ControlPacks from './ControlPacks/ControlPacks';
 import TablePacks, {ModalCRUDType} from './TablePacks/TablePacks';
 import {setOpenModal} from '../../BLL/appReducer';
 import {setCardsPackId} from '../../BLL/cardsReducer';
+import Modal from '../../features/Modal/Modal';
+import ModalLearnPage from '../../features/Modal/ModalLearnPage/ModalLearnPage';
 
 
 const PacksList = () => {
@@ -28,6 +30,8 @@ const PacksList = () => {
     const [searchParams, setSearchParams] = useSearchParams()
     const [modalDeleteIsOpen, setModalDeleteIsOpen] = useState(false)
     const [modalAddIsOpen, setModalAddIsOpen] = useState(false)
+    const [modalChangeIsOpen, setModalChangeIsOpen] = useState(false)
+    const [modalLearnPageIsOpen, setModalLearnPageIsOpen] = useState(false)
     const [packId, setPackId] = useState('')
     const pageQuery = searchParams.get('page')
     //костыль для оптимизации запроса
@@ -50,21 +54,36 @@ const PacksList = () => {
     }
     function closing(modal: ModalCRUDType) {
         if (modal === 'delete') {
+            setPackId('')
             setModalDeleteIsOpen(false)
         }
         if (modal === 'add') {
             setModalAddIsOpen(false)
         }
+        if(modal === 'learnPage'){
+            setModalLearnPageIsOpen(false)
+        }
+        if(modal === 'change'){
+            setPackId('')
+            setModalChangeIsOpen(false)
+        }
         dispatch(setOpenModal(false))
     }
 
     function opening(modal: ModalCRUDType, packId?: string) {
-        if (modal === 'delete' && packId) {
+        if (modal === 'delete' && packId !== undefined) {
             setPackId(packId)
             setModalDeleteIsOpen(true)
         }
+        if(modal === 'learnPage'){
+            setModalLearnPageIsOpen(true)
+        }
         if (modal === 'add') {
             setModalAddIsOpen(true)
+        }
+        if(modal === 'change' && packId !== undefined){
+            setPackId(packId)
+            setModalChangeIsOpen(true)
         }
         dispatch(setOpenModal(true))
     }
@@ -85,8 +104,8 @@ const PacksList = () => {
     const addNewPack = (packTitle:string) => {
         dispatch(changeUserPack('addPack', packTitle))
     }
-    const changePackName = (id: string) => {
-        dispatch(changeUserPack('changePack', id))
+    const changePackName = (id: string, newPackName:string) => {
+        dispatch(changeUserPack('changePack', id, newPackName))
     }
     const removePack = (id: string) => {
         dispatch(changeUserPack('deletePack', id))
@@ -105,7 +124,15 @@ const PacksList = () => {
     }
     return (
         <div className={stylesPack.wrapper}>
-
+            <Modal closing={closing}
+                   modalIsOpen={modalLearnPageIsOpen}
+                   height={300}
+                   width={350}
+                   modalAction={'learnPage'}
+                   setModalIsOpen={setModalLearnPageIsOpen}
+            >
+                <ModalLearnPage/>
+            </Modal>
             <h1 className={stylesLogin.header}>
                 Packs list
             </h1>
@@ -129,6 +156,8 @@ const PacksList = () => {
                         removePack={removePack}
                         closing={closing}
                         modalDeleteIsOpen={modalDeleteIsOpen}
+                        modalChangeIsOpen={modalChangeIsOpen}
+                        setModalChangeIsOpen={setModalChangeIsOpen}
                         packId={packId}
                         opening={opening}
                         setModalDeleteIsOpen={setModalDeleteIsOpen}
